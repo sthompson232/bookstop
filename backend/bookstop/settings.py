@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from dotenv import load_dotenv
 
 
@@ -9,7 +10,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', True)
 
 ALLOWED_HOSTS = ['127.0.0.1']
-
+CORS_ALLOWED_ORIGINS = [
+	'http://localhost:3000',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -18,11 +21,29 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
+		'blog',
+		'corsheaders',
+    'rest_framework',
+    'knox',
 ]
+
+AUTH_USER_MODEL = "accounts.User"
+
+REST_KNOX = {
+	'TOKEN_TTL': timedelta(weeks=1),
+	'AUTO_REFRESH': True,
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+		'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
