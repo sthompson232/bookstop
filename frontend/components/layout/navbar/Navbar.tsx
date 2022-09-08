@@ -1,5 +1,8 @@
 import Link from 'next/link'
-import { HOME_URL, LOGIN_URL } from '../../../constants/urls'
+// Local components
+import AdminPanel from './components/AdminPanel'
+// Constants
+import { HOME_URL } from '../../../constants/urls'
 
 
 const Navbar = () => {
@@ -9,14 +12,9 @@ const Navbar = () => {
       "link": HOME_URL
     }
   ];
-
 	return (
 		<header>
-			<div className="flex justify-end items-center bg-black p-3">
-				<Link href={LOGIN_URL} passHref>
-					<h5 className="text-white cursor-pointer">Login</h5>
-				</Link>
-			</div>
+			<AdminPanel />
 			<div className="flex justify-between items-center p-6 shadow-lg">
 				<Link href={HOME_URL} passHref>
 					<h1 className="text-3xl font-bold tracking-wider cursor-pointer">Bookstop</h1>

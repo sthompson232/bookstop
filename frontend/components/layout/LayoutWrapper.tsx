@@ -2,6 +2,7 @@ import Head from "next/head"
 import { Fragment, ReactNode } from 'react'
 import Navbar from './navbar/Navbar'
 import Footer from './footer/Footer'
+import { useUser } from '../../swr/hooks'
 
 
 interface PropTypes {

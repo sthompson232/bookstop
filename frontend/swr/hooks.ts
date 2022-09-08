@@ -1,15 +1,17 @@
 import useSWR from 'swr'
+import type { SWRConfiguration } from 'swr'
+// Constants
 import { GET_USER_ENDPOINT } from '../constants/urls'
 
 
-
-export const useUser = () => {
-	const { data, mutate, error } = useSWR(GET_USER_ENDPOINT)
+export const useUser = (config?: SWRConfiguration) => {
+	const { data, mutate, error } = useSWR(GET_USER_ENDPOINT, config)
 	const loading = !data && !error
-	const loggedOut = error && error.status === 403
+	const isAuthenticated = !(error && error.status === 403)
+
 	return {
 		loading,
-		loggedOut,
+		isAuthenticated,
 		user: data,
 		mutate
 	}

@@ -16,7 +16,7 @@ export const defaultFetcher = async (url: string) => {
 	}).then(res => {
 		if (!res.ok) {
 			const error = new Error('Unauthenticated')
-			throw Object.assign(error, { info: res.json(), status: res.status })
+			throw Object.assign(error, { status: res.status })
 		}
 		return res.json()
 	})
