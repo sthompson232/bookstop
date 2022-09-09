@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components {
+	.btn {
+		@apply flex items-center justify-center relative rounded-md bg-cyan-500 transition-all duration-300 shadow text-white py-2 px-8
+	}
+	.btn-active {
+		@apply hover:bg-cyan-600 cursor-pointer
+	}
+	.btn-loading {
+		@apply brightness-105 cursor-not-allowed hover:bg-cyan-500
+	}
+
+	.text-input {
+		@apply placeholder-gray-500 focus:border-green-500 border-gray-300 focus:ring-green-500 text-gray-500
+	}
+	.text-input-error {
+		@apply placeholder-red-500 focus:border-red-500 border-red-500 focus:ring-red-500 text-red-500
+	}
+
+	.error-text {
+		@apply text-red-500 text-sm font-semibold
+	}
+}

@@ -1,8 +1,15 @@
+import { useState } from 'react'
 import type { NextPage } from 'next'
-import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
+import { FormProvider } from 'react-hook-form'
 import { useSWRConfig } from 'swr'
+// Hooks
+import useLoginForm from '../../components/forms/hooks/use-login-form'
+// Local components
+import TextInput from '../../components/forms/fields/TextInput'
+import Button from '../../components/ui/Button'
 // Constants
-import { GET_USER_ENDPOINT, LOGIN_ENDPOINT } from '../../constants/urls'
+import { GET_USER_ENDPOINT, HOME_URL, LOGIN_ENDPOINT } from '../../constants/urls'
 import { getUnauthorizedRestAPIHeaders } from '../../utils/headers'
 // Utils
 import { setCookie } from '../../utils/cookies'
@@ -13,12 +20,14 @@ interface LoginForm {
 	password: string,
 }
 
-
 const Login: NextPage = () => {
+	const [formSubmitting, setFormSubmitting] = useState(false)
+	const router = useRouter()
 	const { mutate } = useSWRConfig()
-	const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>()
+	const methods = useLoginForm()
 
 	const login = async (values: LoginForm) => {
+		setFormSubmitting(true)
 		const result = await fetch(LOGIN_ENDPOINT, {
 			method: 'POST',
 			body: JSON.stringify({
@@ -32,25 +41,47 @@ const Login: NextPage = () => {
 			if (res.ok)	{
 				return res.json()
 			}
-			return { status: 'failed' }
+			return false
 		})
-		if (!('status' in result)) {
+		if (result) {
 			setCookie('token', result.token, 7)
 			mutate(GET_USER_ENDPOINT)
+			router.push(HOME_URL)
+		} else {
+			methods.setError('email', { message: 'Unable to login with these credentials' })
+			methods.setError('password', { message: 'Unable to login with these credentials' })
 		}
+		setFormSubmitting(false)
 	}
 
 	return (
-		<div>
-			<h1>Login</h1>
-			<form onSubmit={handleSubmit(login)}>
-				<input type="email" {...register('email')} />
-				{errors?.email && <span>{errors.email.message}</span>}
-				<input type="password" {...register('password')} />
-				{errors?.password && <span>{errors.password.message}</span>}
-				<input type="submit" />
-			</form>
-		</div>
+		<FormProvider {...methods}>
+			<div className="py-10 px-6">
+				<form onSubmit={methods.handleSubmit(login)}>
+					<TextInput 
+						type="email"
+						autoComplete="email"
+						id="email"
+						placeholder="Email"
+						name="email"
+					/>
+					<TextInput 
+						type="password"
+						autoComplete="current-password"
+						id="current-password"
+						placeholder="Password"
+						name="password"
+					/>
+					<Button
+						disabled={formSubmitting}
+						loading={formSubmitting}
+						type="submit"
+					>
+						Submit
+					</Button>
+				</form>
+			</div>
+		</FormProvider>
 	)
 }
 

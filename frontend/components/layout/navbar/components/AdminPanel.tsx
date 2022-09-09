@@ -8,22 +8,28 @@ import { useUser } from '../../../../swr/hooks'
 
 
 const AdminPanel = () => {
-	const { isAuthenticated, user } = useUser()
+	const { loadingUser, isAuthenticated, user } = useUser()
 
 	return (
 		<div className="bg-black p-3">
-			{isAuthenticated ? (
-				<div className="flex justify-between items-center">
-					<h5 className="text-white">{user.email}</h5>
-					<LogoutButton />
-				</div>
-			) : (
-				<div className="flex justify-end items-center">
-					<Link href={LOGIN_URL} passHref>
-						<h5 className="text-white cursor-pointer">Login</h5>
-					</Link>
-				</div>
-			)}
+			{loadingUser
+				? (
+					'Loading' 
+				) : (isAuthenticated 
+					? (
+						<div className="flex justify-between items-center">
+							<h5 className="text-white">{user.email}</h5>
+							<LogoutButton />
+						</div>
+					) : (
+						<div className="flex justify-end items-center">
+							<Link href={LOGIN_URL} passHref>
+								<h5 className="text-white cursor-pointer">Login</h5>
+							</Link>
+						</div>
+					)
+				)
+			}
 		</div>
 	)
 }

@@ -1,15 +1,20 @@
+import { useRouter } from 'next/router'
+import { useSWRConfig } from 'swr'
+// Local components
+import Button from '../../../ui/Button'
 // Constants
-import { GET_USER_ENDPOINT, LOGOUT_ENDPOINT } from '../../../../constants/urls'
+import { GET_USER_ENDPOINT, HOME_URL, LOGOUT_ENDPOINT } from '../../../../constants/urls'
 // Utils
 import { getRestAPIHeaders } from '../../../../utils/headers'
 import { deleteCookie } from '../../../../utils/cookies'
-import { useSWRConfig } from 'swr'
 
 
 const LogoutButton = () => {
+	const router = useRouter()
 	const { mutate } = useSWRConfig()
+
 	const logout = async () => {
-		const result = await fetch(LOGOUT_ENDPOINT, {
+		await fetch(LOGOUT_ENDPOINT, {
 			method: 'POST',
 			body: JSON.stringify({}),
 			headers: {
@@ -22,10 +27,13 @@ const LogoutButton = () => {
 			}
 		})
 		mutate(GET_USER_ENDPOINT)
-		console.log(result);
+		router.push(HOME_URL)
 	}
+	
 	return (
-		<button onClick={logout} className="text-white"><h5>Logout</h5></button>
+		<Button onClick={logout}>
+			Logout
+		</Button>
 	)
 }
 
