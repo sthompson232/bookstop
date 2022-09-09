@@ -31,7 +31,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = "accounts.User"
 
 REST_KNOX = {
-	'TOKEN_TTL': timedelta(weeks=1),
+	'TOKEN_TTL': timedelta(days=7),
 	'AUTO_REFRESH': True,
 }
 
