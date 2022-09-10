@@ -5,11 +5,6 @@ import ResetPasswordForm from '../../../../components/forms/forms/auth/ResetPass
 import LoginForm from '../../../../components/forms/forms/auth/LoginForm'
 
 
-interface ResetPasswordForm {
-	password1: string,
-	password2: string
-}
-
 const ResetPassword: NextPage = () => {
 	const [formSubmittedSuccessfully, setFormSubmittedSuccessfully] = useState(false)
 
