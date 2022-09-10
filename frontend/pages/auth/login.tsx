@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { NextPage } from 'next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FormProvider } from 'react-hook-form'
 import { useSWRConfig } from 'swr'
@@ -9,7 +10,7 @@ import useLoginForm from '../../components/forms/hooks/use-login-form'
 import TextInput from '../../components/forms/fields/TextInput'
 import Button from '../../components/ui/Button'
 // Constants
-import { GET_USER_ENDPOINT, HOME_URL, LOGIN_ENDPOINT } from '../../constants/urls'
+import { GET_USER_ENDPOINT, HOME_URL, FORGOT_PASSWORD_URL, LOGIN_ENDPOINT } from '../../constants/urls'
 import { getUnauthorizedRestAPIHeaders } from '../../utils/headers'
 // Utils
 import { setCookie } from '../../utils/cookies'
@@ -72,6 +73,11 @@ const Login: NextPage = () => {
 						placeholder="Password"
 						name="password"
 					/>
+					<div>
+						<Link href={FORGOT_PASSWORD_URL} passHref>
+							<p className="action-text">Forgot your password?</p>
+						</Link>
+					</div>
 					<Button
 						disabled={formSubmitting}
 						loading={formSubmitting}

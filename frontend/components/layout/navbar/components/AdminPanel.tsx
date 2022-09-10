@@ -18,7 +18,7 @@ const AdminPanel = () => {
 				) : (isAuthenticated 
 					? (
 						<div className="flex justify-between items-center">
-							<h5 className="text-white">{user.email}</h5>
+							<h5 className="text-white">{user?.email}</h5>
 							<LogoutButton />
 						</div>
 					) : (

@@ -8,4 +8,5 @@ urlpatterns = [
     path(f'{API_ENDPOINT_PREFIX}auth/', include('knox.urls')),
     path(f'{API_ENDPOINT_PREFIX}accounts/', include('accounts.urls')),
 		path(f'{API_ENDPOINT_PREFIX}blog/', include('blog.urls')),
+		path(f'{API_ENDPOINT_PREFIX}emails/', include('emails.urls')),
 ]
