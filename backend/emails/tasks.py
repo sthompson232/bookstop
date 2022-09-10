@@ -1,8 +1,11 @@
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader
 
+from celery import shared_task
 
-def send_mail(
+
+@shared_task(name='send-email')
+def send_email(
 		subject_template_name,
 		email_template_name,
 		context,
@@ -21,3 +24,8 @@ def send_mail(
 				email_message.attach_alternative(html_email, "text/html")
 
 		email_message.send()
+
+
+@shared_task(name='beat_task')
+def beat_task():
+	print('BEAT TASK RUNNING!!!!!')

@@ -7,7 +7,7 @@ from django.contrib.auth import login
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.tokens import default_token_generator
 
-from emails.tasks import send_mail
+from emails.tasks import send_email
 from .serializers import CustomAuthTokenSerializer, UserSerializer
 from .models import User
 
@@ -49,9 +49,8 @@ class ForgotPasswordView(views.APIView):
 			reset_url = f'http://localhost:3000/auth/reset-password/{uid}/{token}'
 			context = {
 				"reset_url": reset_url,
-				"user": user,
 			}
-			send_mail(
+			send_email.delay(
 				'emails/password_reset_subject.txt',
 				'emails/password_reset_email.html',
 				context,

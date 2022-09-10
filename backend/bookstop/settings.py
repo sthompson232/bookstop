@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'accounts',
 		'blog',
 		'corsheaders',
+		'django_celery_beat',
 		'emails',
     'rest_framework',
     'knox',
