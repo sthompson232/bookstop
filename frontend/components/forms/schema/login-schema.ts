@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { REQUIRED, VALID_EMAIL } from '../error-messages'
+import { REQUIRED, VALID_EMAIL } from '../../../constants/error-messages'
 
 
 export const loginSchema = yup.object().shape({

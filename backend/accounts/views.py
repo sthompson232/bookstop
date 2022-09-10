@@ -1,9 +1,10 @@
-from cgitb import reset
 from knox.views import LoginView as KnoxLoginView
-from django.contrib.auth import login, views as auth_views
+from django.core.exceptions import ValidationError
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import login
+from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.tokens import default_token_generator
 
 from emails.tasks import send_mail
@@ -36,30 +37,58 @@ class GetUserView(views.APIView):
 			return Response(status=status.HTTP_403_FORBIDDEN)
 
 
-class PasswordResetView(views.APIView):
+class ForgotPasswordView(views.APIView):
 	permission_classes = (permissions.AllowAny,)
 
 	def post(self, request):
-		user_email = request.data['email']
-		user = User.objects.get(email=user_email)
-		uid = urlsafe_base64_encode(force_bytes(user.pk))
-		token = default_token_generator.make_token(user)
-		reset_url = f'http://localhost:3000/auth/reset-password/{uid}/{token}'
-		print(reset_url)
-		context = {
-			"reset_url": reset_url,
-			"user": user,
-		}
-		send_mail(
-			'emails/password_reset_subject.txt',
-			'emails/password_reset_email.html',
-			context,
-			None,
-			user_email,
-			None,
-		)
-		return Response(status=status.HTTP_202_ACCEPTED)
+		if 'email' in request.data:
+			user_email = request.data['email']
+			user = User.objects.get(email=user_email)
+			uid = urlsafe_base64_encode(force_bytes(user.pk))
+			token = default_token_generator.make_token(user)
+			reset_url = f'http://localhost:3000/auth/reset-password/{uid}/{token}'
+			context = {
+				"reset_url": reset_url,
+				"user": user,
+			}
+			send_mail(
+				'emails/password_reset_subject.txt',
+				'emails/password_reset_email.html',
+				context,
+				None,
+				user_email,
+			)
+			return Response(status=status.HTTP_200_OK)
+		return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class PasswordChangeView(auth_views.PasswordChangeView):
-	pass
+class ResetPasswordView(views.APIView):
+	permission_classes = (permissions.AllowAny,)
+
+	def post(self, request):
+		data = request.data
+		if 'password1' in data and 'password2' in data and 'uid' in data and 'token' in data:
+			password1 = request.data['password1']
+			password2 = request.data['password2']
+			uid = request.data['uid']
+			token = request.data['token']
+			if password1 == password2:
+				try:
+					user = User.objects.get(pk=urlsafe_base64_decode(uid).decode())
+				except (TypeError, ValueError, OverflowError, User.DoesNotExist, ValidationError):
+					return Response({}, status=status.HTTP_403_FORBIDDEN)
+				valid_token = default_token_generator.check_token(user, token)
+				if valid_token:
+					try:
+						validate_password(password1, user)
+					except ValidationError as errors:
+						return Response({ 'errors': errors }, status=status.HTTP_400_BAD_REQUEST)
+					user.set_password(password1)
+					user.save()
+					return Response({}, status=status.HTTP_200_OK)
+				else:
+					return Response({}, status=status.HTTP_403_FORBIDDEN)
+			else:
+				return Response({}, status=status.HTTP_400_BAD_REQUEST)
+		else:
+			return Response({}, status=status.HTTP_400_BAD_REQUEST)

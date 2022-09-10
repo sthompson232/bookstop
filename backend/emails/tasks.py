@@ -11,9 +11,8 @@ def send_mail(
 		html_email_template_name=None,
 	):
 		subject = loader.render_to_string(subject_template_name, context)
-		# Email subject *must not* contain newlines
+		# Email subject must not contain newlines
 		subject = "".join(subject.splitlines())
-		print(email_template_name)
 		body = loader.render_to_string(email_template_name, context)
 
 		email_message = EmailMultiAlternatives(subject, body, from_email, [to_email])

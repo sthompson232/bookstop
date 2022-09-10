@@ -5,7 +5,6 @@ export const getCookie = (name: string) => {
   let cookies: Cookies = {};
   document.cookie.split(';').forEach((cookie: string) => {
     const [name, value]: string[] = cookie.split('=');
-		console.log(name, value)
     cookies[name.trim()] = value;
 	})
   return cookies[name];
