@@ -13,9 +13,10 @@ const Home: NextPage = () => {
         <meta name="description" content="Bookstop home page" />
         <link rel="icon" href="/icons/favicon.ico" />
       </Head>
-			<div className="max-w-8xl mx-auto p-4 sm:px-8"> 
-				<Link href="/blog" passHref>
-					<h1 className="text-2xl cursor-pointer">Blog</h1>
+			<div className="max-w-8xl mx-auto p-4 sm:px-8">
+				<h1>Home page</h1>
+				<Link href="/portal/blog/new" passHref>
+					<h1 className="text-2xl cursor-pointer">Blog form</h1>
 				</Link>
 			</div>
 		</Fragment>

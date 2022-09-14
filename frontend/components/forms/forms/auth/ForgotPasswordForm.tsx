@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { FormProvider } from 'react-hook-form'
 // Hooks
-import useForgotPasswordForm from '../../hooks/use-forgot-password-form'
+import useForgotPasswordForm, { ForgotPasswordFormTypes } from '../../hooks/auth/use-forgot-password-form'
 // Local components
 import TextInput from '../../fields/TextInput'
 import Button from '../../../ui/Button'
@@ -16,15 +16,11 @@ interface PropTypes {
 	setFormSubmittedSuccessfully: Function
 }
 
-interface ForgotPasswordForm {
-	email: string
-}
-
 const ForgotPasswordForm = ({ setFormSubmittedSuccessfully }: PropTypes) => {
 	const [formSubmitting, setFormSubmitting] = useState(false)
 	const methods = useForgotPasswordForm()
 
-	const submitForm = async (values: ForgotPasswordForm) => {
+	const submitForm = async (values: ForgotPasswordFormTypes) => {
 		setFormSubmitting(true)
 		const result = await fetch(FORGOT_PASSWORD_ENDPOINT, {
 			method: 'POST',

@@ -10,4 +10,5 @@ urlpatterns = [
 	path('get-user/', views.GetUserView.as_view(), name='get-user'),
 	path('forgot-password/', views.ForgotPasswordView.as_view(), name='forgot-password'),
 	path('reset-password/', views.ResetPasswordView.as_view(), name='reset-password'),
+	path('tiny-key/', views.GetTinyAPIKey.as_view(), name='tiny-key'),
 ]

@@ -1,15 +1,15 @@
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { loginSchema } from '../schema/login-schema'
+import { loginSchema } from '../../schema/auth'
 
 
-export interface LoginForm {
+export interface LoginFormTypes {
 	email: string,
 	password: string,
 }
 
 const useLoginForm = () => {
-	const formMeta = useForm<LoginForm>({
+	const formMeta = useForm<LoginFormTypes>({
 		resolver: yupResolver(loginSchema)
 	})
 	return formMeta

@@ -15,7 +15,7 @@
 	}
 
 	.text-input {
-		@apply placeholder-gray-500 focus:border-green-500 border-gray-300 focus:ring-green-500 text-gray-500
+		@apply placeholder-gray-500 focus:border-green-500 border-gray-300 focus:ring-green-500
 	}
 	.text-input-error {
 		@apply placeholder-red-500 focus:border-red-500 border-red-500 focus:ring-red-500 text-red-500
@@ -27,4 +27,9 @@
 	.action-text {
 		@apply inline text-blue-500 text-sm font-semibold cursor-pointer hover:text-blue-600 transition-all
 	}
+}
+
+/* Hide TinyMCE logo */
+.tox-statusbar__branding {
+	visibility: hidden;
 }

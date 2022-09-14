@@ -1,14 +1,14 @@
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { forgotPasswordSchema } from '../schema/forgot-password-schema'
+import { forgotPasswordSchema } from '../../schema/auth'
 
 
-export interface ForgotPasswordForm {
+export interface ForgotPasswordFormTypes {
 	email: string
 }
 
 const useForgotPasswordForm = () => {
-	const formMeta = useForm<ForgotPasswordForm>({
+	const formMeta = useForm<ForgotPasswordFormTypes>({
 		resolver: yupResolver(forgotPasswordSchema)
 	})
 	return formMeta

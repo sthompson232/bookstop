@@ -1,22 +1,22 @@
-import { useFormContext } from 'react-hook-form'
+import { FieldError, useController, UseControllerProps } from 'react-hook-form'
 import classNames from 'classnames'
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid'
 
 
-interface PropTypes extends React.InputHTMLAttributes<HTMLInputElement> {
+interface PropTypes extends UseControllerProps, React.InputHTMLAttributes<HTMLInputElement> {
 	name: string,
-	type: string,
-	autoComplete: string,
-	id?: string,
-	placeholder?: string,
-}
-
-interface FormValues {
-	[key: string]: any
+	defaultValue?: string,
+	control?: any,
+	error?: FieldError,
 }
 
 const TextInput = (props: PropTypes) => {
-	const { register, formState: { errors } }: FormValues = useFormContext()
+	const { name, control, defaultValue, error } = props
+	const { field: { onChange, onBlur, value, ref } } = useController({
+		name,
+		control,
+		defaultValue
+	});
 
 	return (
 		<div className="mb-2">
@@ -24,22 +24,25 @@ const TextInput = (props: PropTypes) => {
 				<input
 					{...props}
 					className={classNames('block w-full rounded-md pr-10 focus:outline-none transition-all', {
-						'text-input': !errors?.[`${props.name}`],
-						'text-input-error': errors?.[`${props.name}`],
+						'text-input': !error,
+						'text-input-error': error,
 					})}
+					onChange={onChange}
+					onBlur={onBlur}
+					value={value}
+					ref={ref}
 					aria-invalid="true"
-					aria-describedby={`${props.name}-error`}
-					{...register(props.name)}
+					aria-describedby={`${name}-error`}
 				/>
 					<div className={classNames('pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 transition-all', {
-						'opacity-100': errors?.[`${props.name}`],
-						'opacity-0': !errors?.[`${props.name}`]
+						'opacity-100': error,
+						'opacity-0': !error
 					})}>
 						<ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
 					</div>
 			</div>
-			{errors[`${props.name}`] &&
-				<p className="error-text" id={`${props.name}-error`}>{errors?.[`${props.name}`].message}</p>
+			{error?.message &&
+				<p className="error-text" id={`${name}-error`}>{error?.message}</p>
 			}
 		</div>
 	)

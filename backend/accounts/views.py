@@ -1,5 +1,6 @@
 from knox.views import LoginView as KnoxLoginView
 from django.core.exceptions import ValidationError
+from django.conf import settings
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
@@ -34,7 +35,7 @@ class GetUserView(views.APIView):
 			user = UserSerializer(request.user).data
 			return Response(user, status=status.HTTP_200_OK)
 		else:
-			return Response(status=status.HTTP_403_FORBIDDEN)
+			return Response({}, status=status.HTTP_403_FORBIDDEN)
 
 
 class ForgotPasswordView(views.APIView):
@@ -57,8 +58,8 @@ class ForgotPasswordView(views.APIView):
 				None,
 				user_email,
 			)
-			return Response(status=status.HTTP_200_OK)
-		return Response(status=status.HTTP_400_BAD_REQUEST)
+			return Response({}, status=status.HTTP_200_OK)
+		return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ResetPasswordView(views.APIView):
@@ -91,3 +92,10 @@ class ResetPasswordView(views.APIView):
 				return Response({}, status=status.HTTP_400_BAD_REQUEST)
 		else:
 			return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetTinyAPIKey(views.APIView):
+	permission_classes = (permissions.IsAuthenticated,)
+
+	def get(self, request):
+		return Response({ 'key': settings.TINY_API_KEY }, status=status.HTTP_200_OK)

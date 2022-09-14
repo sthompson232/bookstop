@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { FormProvider } from 'react-hook-form'
 import { useSWRConfig } from 'swr'
 // Hooks
-import useLoginForm from '../../hooks/use-login-form'
+import useLoginForm, { LoginFormTypes } from '../../hooks/auth/use-login-form'
 // Local components
 import TextInput from '../../fields/TextInput'
 import Button from '../../../ui/Button'
@@ -16,18 +16,13 @@ import { FAILED_LOGIN } from '../../../../constants/error-messages'
 import { setCookie } from '../../../../utils/cookies'
 
 
-interface LoginForm {
-	email: string,
-	password: string,
-}
-
 const LoginForm = () => {
 	const [formSubmitting, setFormSubmitting] = useState(false)
 	const router = useRouter()
 	const { mutate } = useSWRConfig()
 	const methods = useLoginForm()
 
-	const login = async (values: LoginForm) => {
+	const login = async (values: LoginFormTypes) => {
 		setFormSubmitting(true)
 		const result = await fetch(LOGIN_ENDPOINT, {
 			method: 'POST',
@@ -59,19 +54,23 @@ const LoginForm = () => {
 		<FormProvider {...methods}>
 			<form onSubmit={methods.handleSubmit(login)}>
 				<TextInput
+					control={methods.control}
 					autoFocus
 					type="email"
 					autoComplete="email"
 					id="email"
 					placeholder="Email"
 					name="email"
+					error={methods.formState.errors?.email}
 				/>
-				<TextInput 
+				<TextInput
+					control={methods.control}
 					type="password"
 					autoComplete="current-password"
 					id="current-password"
 					placeholder="Password"
 					name="password"
+					error={methods.formState.errors?.password}
 				/>
 				<div className="mb-2">
 					<Link href={FORGOT_PASSWORD_URL} passHref>

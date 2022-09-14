@@ -2,9 +2,9 @@ import { useRouter } from 'next/router'
 import { FormProvider } from 'react-hook-form'
 // Local components
 import TextInput from '../../../../components/forms/fields/TextInput'
-// Hooks
-import useResetPasswordForm from '../../../../components/forms/hooks/use-reset-password-form'
 import Button from '../../../../components/ui/Button'
+// Hooks
+import useResetPasswordForm, { ResetPasswordFormTypes } from '../../../../components/forms/hooks/auth/use-reset-password-form'
 // Constants
 import { GENERIC_ERROR_MESSAGE } from '../../../../constants/error-messages'
 // Utils
@@ -16,16 +16,11 @@ interface PropTypes {
 	setFormSubmittedSuccessfully: Function
 }
 
-interface ResetPasswordForm {
-	password1: string,
-	password2: string
-}
-
 const ResetPasswordForm = ({ setFormSubmittedSuccessfully }: PropTypes) => {
   const router = useRouter();
   const methods = useResetPasswordForm()
 
-  const submitForm = async (values: ResetPasswordForm) => {
+  const submitForm = async (values: ResetPasswordFormTypes) => {
     const result = await fetch(RESET_PASSWORD_ENDPOINT, {
       method: 'POST',
       headers: {
