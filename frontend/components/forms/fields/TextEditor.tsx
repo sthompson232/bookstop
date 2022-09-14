@@ -16,6 +16,7 @@ interface PropTypes extends IAllProps, UseControllerProps {
 const TextEditor = (props: PropTypes) => {
 	const [apiKey, setApiKey] = useState('')
 	const [fetchingApiKey, setFetchingApiKey] = useState(false);
+	const [fetchError, setFetchError] = useState(false);
 	const { name, control, defaultValue, error } = props
 	const { field: { onChange, onBlur, value, ref } } = useController({
 		name,
@@ -45,6 +46,8 @@ const TextEditor = (props: PropTypes) => {
 		})
 		if (result) {
 			setApiKey(result.key)
+		} else {
+			setFetchError(true)
 		}
 		setFetchingApiKey(false)
 	}
@@ -54,6 +57,7 @@ const TextEditor = (props: PropTypes) => {
 			<Fragment>
 				<Editor
 					apiKey={apiKey}
+					disabled={fetchError}
 					ref={ref}
 					id="tinymce-editor"
 					// plugins=""

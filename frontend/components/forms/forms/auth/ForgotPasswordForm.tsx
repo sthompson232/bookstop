@@ -44,11 +44,13 @@ const ForgotPasswordForm = ({ setFormSubmittedSuccessfully }: PropTypes) => {
 			<form onSubmit={methods.handleSubmit(submitForm)}>
 				<TextInput
 					autoFocus
+					control={methods.control}
 					type="email"
 					autoComplete="email"
 					id="email"
 					placeholder="Email"
 					name="email"
+					error={methods.formState.errors?.email}
 				/>
 				<Button
 					type="submit"

@@ -57,18 +57,22 @@ const ResetPasswordForm = ({ setFormSubmittedSuccessfully }: PropTypes) => {
 			<form onSubmit={methods.handleSubmit(submitForm)}>
 				<TextInput
 					autoFocus
+					control={methods.control}
 					type="password"
 					autoComplete="new-password"
 					id="password1"
 					placeholder="Password"
 					name="password1"
+					error={methods.formState.errors?.password1}
 				/>
 				<TextInput
 					type="password"
+					control={methods.control}
 					autoComplete="new-password"
 					id="password2"
 					placeholder="Confirm password"
 					name="password2"
+					error={methods.formState.errors?.password2}
 				/>
 				<Button type="submit">Reset password</Button>
 			</form>
