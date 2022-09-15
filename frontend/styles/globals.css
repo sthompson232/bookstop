@@ -5,10 +5,10 @@
 
 @layer components {
 	.btn {
-		@apply flex items-center justify-center relative rounded-md bg-cyan-500 transition-all duration-300 shadow text-white py-2 px-8
+		@apply flex items-center justify-center font-semibold uppercase tracking-wide relative bg-black transition-all duration-300 shadow text-white py-2 px-8 text-sm
 	}
 	.btn-active {
-		@apply hover:bg-cyan-600 cursor-pointer
+		@apply hover:bg-gray-800 cursor-pointer
 	}
 	.btn-loading {
 		@apply brightness-105 cursor-not-allowed hover:bg-cyan-500
