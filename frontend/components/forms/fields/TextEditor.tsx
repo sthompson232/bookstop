@@ -1,6 +1,8 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Editor, IAllProps } from '@tinymce/tinymce-react'
 import { useController, UseControllerProps, FieldError } from 'react-hook-form'
+// Local components
+import Loader from '../../ui/Loader'
 // Constants
 import { FETCH_TINY_API_KEY_ENDPOINT } from '../../../constants/urls'
 import { getRestAPIHeaders } from '../../../utils/headers'
@@ -88,7 +90,9 @@ const TextEditor = (props: PropTypes) => {
 			}
 			</Fragment>
 		) : (
-			<h2>Loading...</h2>
+			<div className="h-full flex justify-center items-center">
+				<Loader width={48} height={48} />
+			</div>
 		)
 }
 

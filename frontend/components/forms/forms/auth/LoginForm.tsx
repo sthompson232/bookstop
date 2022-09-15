@@ -82,7 +82,7 @@ const LoginForm = () => {
 					loading={formSubmitting}
 					type="submit"
 				>
-					Submit
+					Login
 				</Button>
 			</form>
 		</FormProvider>

@@ -1,5 +1,6 @@
-import Image from 'next/image'
 import classNames from 'classnames'
+// Local components
+import Loader from './Loader'
 
 
 interface PropTypes extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,7 +18,7 @@ const Button = ({ loading, ...props }: PropTypes) => (
 	>
 		{loading &&
 		<div className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center">
-			<Image src="/svg/spinner.svg" layout="fixed" width="16" height="16" />
+			<Loader fill="#fff" width={16} height={16} />
 		</div>
 		}
 		{props.children}
