@@ -3,11 +3,11 @@ import type { NextPage } from 'next'
 import BlogPostForm from '../../../components/forms/forms/blog/BlogPostForm'
 
 
-const BlogNew: NextPage = () => {
+const BlogNewPage: NextPage = () => {
 	return (
 		<BlogPostForm />
 	)
 }
 
 
-export default BlogNew
+export default BlogNewPage

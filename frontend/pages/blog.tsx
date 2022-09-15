@@ -1,9 +1,18 @@
-const Blog = () => {
+import { Fragment } from 'react'
+import Head from 'next/head'
+
+const BlogPage = () => {
 	return (
-		<div>
-			<h1>Blog page</h1>
-		</div>
+		<Fragment>
+			<Head>
+        <title>Home | Blog</title>
+        <meta name="description" content="Bookstop blog page" />
+      </Head>
+			<div className="container">
+				<h1>Blog page</h1>
+			</div>
+		</Fragment>
 	)
 }
 
-export default Blog
+export default BlogPage

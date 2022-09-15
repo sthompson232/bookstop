@@ -21,7 +21,7 @@
 		@apply btn-base bg-black text-white border-gray-500 border-2 hover:bg-gray-800
 	}
 	.btn-loading {
-		@apply brightness-105 cursor-not-allowed hover:bg-cyan-500
+		@apply brightness-105 cursor-not-allowed
 	}
 
 	/* FORM FIELDS */
@@ -38,6 +38,11 @@
 	}
 	.action-text {
 		@apply inline text-blue-500 text-sm font-semibold cursor-pointer hover:text-blue-600 transition-all
+	}
+	
+	/* FORMATTING */
+	.container {
+		@apply max-w-7xl mx-auto p-4 sm:px-8
 	}
 }
 

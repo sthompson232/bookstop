@@ -15,9 +15,14 @@ const ResetPassword: NextPage = () => {
 		</div>
 	)
 
-  return formSubmittedSuccessfully
-		? renderResetSuccessfulMessage() 
-		: <ResetPasswordForm setFormSubmittedSuccessfully={setFormSubmittedSuccessfully} />
+  return (
+		<div className="container">
+			{formSubmittedSuccessfully
+				? renderResetSuccessfulMessage() 
+				: <ResetPasswordForm setFormSubmittedSuccessfully={setFormSubmittedSuccessfully} />
+			}
+		</div>
+	)
 }
 
 export default ResetPassword;

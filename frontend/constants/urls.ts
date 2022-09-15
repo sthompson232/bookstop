@@ -11,11 +11,13 @@ export const RESET_PASSWORD_URL: string = `${AUTH_URL}/reset-password`
 // PORTAL
 export const PORTAL_URL: string = '/portal'
 // BLOG
-export const PORTAL_BLOG_NEW_URL: string = `${PORTAL_URL}/blog/new`
+export const PORTAL_BLOG_URL: string = `${PORTAL_URL}/blog`
+export const PORTAL_BLOG_NEW_URL: string = `${PORTAL_BLOG_URL}/new`
+export const PORTAL_BLOG_EDIT_URL: string = `${PORTAL_BLOG_URL}/edit`
 
 
 export const AUTHENTICATED_ROUTES: string[] = [PORTAL_URL, PORTAL_BLOG_NEW_URL]
-
+export const PUBLIC_ROUTES: string[] = [HOME_URL, BLOG_URL]
 
 // API
 export const API_VERSION: string = '/api'

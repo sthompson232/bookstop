@@ -5,7 +5,9 @@ import LoginForm from '../../components/forms/forms/auth/LoginForm'
 
 const Login: NextPage = () => {
 	return (
-		<LoginForm />
+		<div className="container">
+			<LoginForm />
+		</div>
 	)
 }
 

@@ -10,9 +10,14 @@ const ForgotPassword: NextPage = () => {
 		<h1>Reset request sent</h1>
 	)
 
-	return formSubmittedSuccessfully 
-		? renderResetRequestSentMessage() 
-		: <ForgotPasswordForm setFormSubmittedSuccessfully={setFormSubmittedSuccessfully} />
+	return (
+		<div className="container">
+			{formSubmittedSuccessfully 
+				? renderResetRequestSentMessage() 
+				: <ForgotPasswordForm setFormSubmittedSuccessfully={setFormSubmittedSuccessfully} />
+			}
+		</div>
+	)
 }
 
 export default ForgotPassword

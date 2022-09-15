@@ -2,7 +2,7 @@ import Link from 'next/link'
 // Local component
 import LogoutButton from './LogoutButton'
 // Constants
-import { LOGIN_URL } from '../../../../constants/urls'
+import { LOGIN_URL, PORTAL_URL } from '../../../../constants/urls'
 // Utils
 import { useUser } from '../../../../swr/hooks'
 import Button from '../../../ui/Button'
@@ -20,7 +20,14 @@ const AdminPanel = () => {
 					? (
 						<div className="flex justify-between items-center">
 							<h5 className="text-white">{user?.email}</h5>
-							<LogoutButton />
+							<div className="flex space-x-2">
+								<Link href={PORTAL_URL} passHref>
+									<Button className="btn-inverse">
+										Portal
+									</Button>
+								</Link>
+								<LogoutButton />
+							</div>
 						</div>
 					) : (
 						<div className="flex justify-end items-center">
