@@ -12,15 +12,15 @@ import Button from '../../../ui/Button'
 const BlogPostForm = () => {
 	const methods = useBlogPostForm()
 
-	const submitForm = (values: BlogPostFormTypes) => {
-		console.log(values)
+	const submitForm = (values: BlogPostFormTypes, saveType: string) => {
+		console.log(values, saveType)
 	}
 
 	return (
 		<FormProvider {...methods}>
-			<form className="h-full" onSubmit={methods.handleSubmit(submitForm)}>
-				<div className="grid grid-cols-4 h-full">
-					<div className="col-span-3">
+			<form className="h-full">
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 h-full">
+					<div className="col-span-1 sm:col-span-1 md:col-span-2 xl:col-span-3">
 						<TextEditor
 							control={methods.control}
 							name="content"
@@ -32,7 +32,7 @@ const BlogPostForm = () => {
 							<Link href="/" passHref>
 								Back
 							</Link>
-							<h2>New blog post</h2>
+							<h2>New post</h2>
 							<TextInput
 								control={methods.control}
 								autoFocus
@@ -42,10 +42,23 @@ const BlogPostForm = () => {
 								placeholder="Title"
 								name="title"
 							/>
+							<h3>Publish date</h3>
+							<h3>Upload photos</h3>
 						</div>
-						<Button type="submit">
-							Submit
-						</Button>
+						<div className="space-y-2">
+							<Button 
+								className="btn-secondary w-full"
+								onClick={methods.handleSubmit(data => submitForm(data, 'draft'))}
+							>
+								Save as Draft
+							</Button>
+							<Button
+								className="btn w-full"
+								onClick={methods.handleSubmit(data => submitForm(data, 'publish'))}
+							>
+								Publish
+							</Button>
+						</div>
 					</div>
 				</div>
 			</form>

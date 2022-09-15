@@ -31,7 +31,7 @@ const LogoutButton = () => {
 	}
 	
 	return (
-		<Button onClick={logout}>
+		<Button className="btn-inverse" onClick={logout}>
 			Logout
 		</Button>
 	)

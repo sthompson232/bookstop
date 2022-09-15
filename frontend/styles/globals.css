@@ -4,16 +4,27 @@
 
 
 @layer components {
-	.btn {
-		@apply flex items-center justify-center font-semibold uppercase tracking-wide relative bg-black transition-all duration-300 shadow text-white py-2 px-8 text-sm
+	/* BUTTONS */
+	.btn-base {
+		@apply flex items-center justify-center font-semibold uppercase tracking-wide relative transition-all duration-300 shadow py-2 px-8 text-sm cursor-pointer
 	}
-	.btn-active {
-		@apply hover:bg-gray-800 cursor-pointer
+	.btn {
+		@apply btn-base bg-black text-white hover:bg-gray-800
+	}
+	.btn-secondary {
+		@apply btn-base bg-white text-black border-gray-500 border-2 hover:bg-gray-100
+	}
+	.btn-inverse {
+		@apply btn-base bg-white text-black hover:bg-gray-100
+	}
+	.btn-inverse-secondary {
+		@apply btn-base bg-black text-white border-gray-500 border-2 hover:bg-gray-800
 	}
 	.btn-loading {
 		@apply brightness-105 cursor-not-allowed hover:bg-cyan-500
 	}
 
+	/* FORM FIELDS */
 	.text-input {
 		@apply placeholder-gray-500 focus:border-green-500 border-gray-300 focus:ring-green-500
 	}
@@ -21,6 +32,7 @@
 		@apply placeholder-red-500 focus:border-red-500 border-red-500 focus:ring-red-500 text-red-500
 	}
 
+	/* TEXT STYLES */
 	.error-text {
 		@apply text-red-500 text-sm font-semibold
 	}

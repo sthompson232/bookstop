@@ -13,7 +13,6 @@ const Button = ({ loading, ...props }: PropTypes) => (
 		type={props.type || 'button'}
 		className={props.className || classNames('btn', {
 			'btn-loading': loading,
-			'btn-active': !loading,
 		})}
 	>
 		{loading &&

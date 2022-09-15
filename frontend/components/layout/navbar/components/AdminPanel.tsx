@@ -5,6 +5,7 @@ import LogoutButton from './LogoutButton'
 import { LOGIN_URL } from '../../../../constants/urls'
 // Utils
 import { useUser } from '../../../../swr/hooks'
+import Button from '../../../ui/Button'
 
 
 const AdminPanel = () => {
@@ -24,7 +25,9 @@ const AdminPanel = () => {
 					) : (
 						<div className="flex justify-end items-center">
 							<Link href={LOGIN_URL} passHref>
-								<h5 className="text-white cursor-pointer">Login</h5>
+								<Button className="btn-inverse">
+									Login
+								</Button>
 							</Link>
 						</div>
 					)
