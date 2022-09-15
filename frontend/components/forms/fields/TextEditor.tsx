@@ -61,6 +61,7 @@ const TextEditor = (props: PropTypes) => {
 					ref={ref}
 					id="tinymce-editor"
 					init={{
+						height: '100%',
 						menubar: 'edit insert format tools table',
 						menu: {
 							file: { title: 'File', items: 'newdocument restoredraft | preview | print ' },

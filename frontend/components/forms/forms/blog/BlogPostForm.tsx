@@ -1,4 +1,5 @@
 import { FormProvider } from 'react-hook-form'
+import Link from 'next/link'
 // Hooks
 import useBlogPostForm from '../../hooks/blog/use-blog-post-form'
 import { BlogPostFormTypes } from '../../hooks/blog/use-blog-post-form'
@@ -17,24 +18,36 @@ const BlogPostForm = () => {
 
 	return (
 		<FormProvider {...methods}>
-			<form onSubmit={methods.handleSubmit(submitForm)}>
-				<TextInput
-					control={methods.control}
-					autoFocus
-					type="text"
-					autoComplete="title"
-					id="title"
-					placeholder="Title"
-					name="title"
-				/>
-				<TextEditor
-					control={methods.control}
-					name="content"
-					error={methods.formState.errors?.content}
-				/>
-				<Button type="submit">
-					Submit
-				</Button>
+			<form className="h-full" onSubmit={methods.handleSubmit(submitForm)}>
+				<div className="grid grid-cols-4 h-full">
+					<div className="col-span-3">
+						<TextEditor
+							control={methods.control}
+							name="content"
+							error={methods.formState.errors?.content}
+						/>
+					</div>
+					<div className="col-span-1 flex flex-col justify-between shadow p-4">
+						<div>
+							<Link href="/" passHref>
+								Back
+							</Link>
+							<h2>New blog post</h2>
+							<TextInput
+								control={methods.control}
+								autoFocus
+								type="text"
+								autoComplete="title"
+								id="title"
+								placeholder="Title"
+								name="title"
+							/>
+						</div>
+						<Button type="submit">
+							Submit
+						</Button>
+					</div>
+				</div>
 			</form>
 		</FormProvider>
 	)

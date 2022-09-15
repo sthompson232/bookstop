@@ -29,6 +29,9 @@
 	}
 }
 
+html, body {
+	height: 100%;
+}
 /* Hide TinyMCE logo */
 .tox-statusbar__branding {
 	visibility: hidden;
