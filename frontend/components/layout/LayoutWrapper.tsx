@@ -30,7 +30,7 @@ const LayoutWrapper = ({ children }: PropTypes) => {
 				<link rel="manifest" href="/manifest.json" />
 				<title>Bookstop</title>
 			</Head>
-			<span className="flex flex-col h-screen antialiased selection:bg-blue-500 selection:text-white">
+			<span className="flex flex-col h-screen antialiased selection:bg-accent selection:text-white">
 				<Navbar />
 				<main className="prose max-w-none flex-grow">
 					{children}

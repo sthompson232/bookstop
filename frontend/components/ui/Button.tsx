@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import classNames from 'classnames'
 // Local components
 import Loader from './Loader'
@@ -8,7 +9,7 @@ interface PropTypes extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 
-const Button = ({ loading, ...props }: PropTypes) => (
+const Button = forwardRef(({ loading, ...props }: PropTypes, ref) => (
 	<button
 		{...props}
 		type={props.type || 'button'}
@@ -23,6 +24,6 @@ const Button = ({ loading, ...props }: PropTypes) => (
 		}
 		{props.children}
 	</button>
-)
+))
 
 export default Button

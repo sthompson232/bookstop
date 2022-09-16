@@ -33,6 +33,7 @@ const BlogPostForm = () => {
 								Back
 							</Link>
 							<h2>New post</h2>
+							<h3>Title</h3>
 							<TextInput
 								control={methods.control}
 								autoFocus
@@ -41,11 +42,12 @@ const BlogPostForm = () => {
 								id="title"
 								placeholder="Title"
 								name="title"
+								error={methods.formState.errors?.title}
 							/>
 							<h3>Publish date</h3>
 							<h3>Upload photos</h3>
 						</div>
-						<div className="space-y-2">
+						<div className="space-y-2 mt-6">
 							<Button 
 								className="btn-secondary w-full"
 								onClick={methods.handleSubmit(data => submitForm(data, 'draft'))}

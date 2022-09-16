@@ -5,6 +5,7 @@ export const FAILED_LOGIN = 'Unable to log in with these credentials'
 
 // Forms
 export const REQUIRED = 'This field is required'
+export const GENERIC_MAX = (num: number) => `This field must have a maximum of ${num} characters`
 export const VALID_EMAIL = 'Please enter a valid email address'
 export const PASSWORD_MIN = 'Password is too short - should be a minimum of 8 characters.'
 export const PASSWORD_MATCH = 'Passwords do not match'

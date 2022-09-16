@@ -26,7 +26,7 @@
 
 	/* FORM FIELDS */
 	.text-input {
-		@apply placeholder-gray-500 focus:border-green-500 border-gray-300 focus:ring-green-500
+		@apply placeholder-gray-500 focus:border-accent border-gray-300 focus:ring-accent
 	}
 	.text-input-error {
 		@apply placeholder-red-500 focus:border-red-500 border-red-500 focus:ring-red-500 text-red-500
@@ -34,7 +34,7 @@
 
 	/* TEXT STYLES */
 	.error-text {
-		@apply text-red-500 text-sm font-semibold
+		@apply text-red-500 text-sm font-semibold mt-1
 	}
 	.action-text {
 		@apply inline text-blue-500 text-sm font-semibold cursor-pointer hover:text-blue-600 transition-all

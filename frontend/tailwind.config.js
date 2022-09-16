@@ -5,7 +5,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+			colors: {
+				"accent": "#f65900",
+			}
+		},
   },
   plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
 }
