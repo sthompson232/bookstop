@@ -10,8 +10,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', True)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
+CORS_ALLOW_CREDENTIALS = True
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -24,6 +25,7 @@ INSTALLED_APPS = [
 		'corsheaders',
 		'django_celery_beat',
 		'emails',
+		'mediamanager',
     'rest_framework',
     'knox',
 ]
@@ -114,7 +116,11 @@ else:
 # EMAIL_HOST_USER = ''
 # EMAIL_HOST_PASSWORD = ''
 
-STATIC_URL = 'static/'
+if DEBUG:
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CELERY_BROKER_URL = 'redis://localhost:6379'

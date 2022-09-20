@@ -21,9 +21,14 @@ export const PUBLIC_ROUTES: string[] = [HOME_URL, BLOG_URL]
 
 // API
 export const API_VERSION: string = '/api'
+export const API_BASE_PATH: string = process.env.NODE_ENV === 'development'
+	? `http://localhost:8000${API_VERSION}`
+	: `https://troubador-portal.co.uk${API_VERSION}`
+
 export const API_ROOT: string = `http://127.0.0.1:8000${API_VERSION}`
 export const ACCOUNTS_ROOT: string = `${API_ROOT}/accounts`
 export const BLOG_ROOT: string = `${API_ROOT}/blog`
+export const MEDIA_MANAGER_ROOT: string = `${API_ROOT}/media-manager`
 
 // Accounts
 export const GET_USER_ENDPOINT: string = `${ACCOUNTS_ROOT}/get-user/`
@@ -33,3 +38,6 @@ export const LOGOUT_ALL_ENDPOINT: string = `${ACCOUNTS_ROOT}/logout-all/`
 export const FORGOT_PASSWORD_ENDPOINT: string = `${ACCOUNTS_ROOT}/forgot-password/`
 export const RESET_PASSWORD_ENDPOINT: string = `${ACCOUNTS_ROOT}/reset-password/`
 export const FETCH_TINY_API_KEY_ENDPOINT: string = `${ACCOUNTS_ROOT}/tiny-key`
+
+// Media manager
+export const UPLOAD_TINYMCE_IMAGE: string = `${MEDIA_MANAGER_ROOT}/upload-tinymce-image/`
