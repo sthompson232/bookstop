@@ -39,6 +39,9 @@
 	.action-text {
 		@apply inline text-blue-500 text-sm font-semibold cursor-pointer hover:text-blue-600 transition-all
 	}
+	.link-text {
+		@apply underline text-black text-sm font-semibold cursor-pointer hover:text-accent transition-all my-1
+	}
 	
 	/* FORMATTING */
 	.container {

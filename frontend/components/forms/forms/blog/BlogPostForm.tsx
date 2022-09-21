@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { FormProvider } from 'react-hook-form'
 import Link from 'next/link'
 // Hooks
@@ -8,10 +9,13 @@ import ImageBrowser from '../../../images/ImageBrowser'
 import TextEditor from '../../fields/TextEditor'
 import TextInput from '../../fields/TextInput'
 import Button from '../../../ui/Button'
+import ModalWrapper from '../../../ui/ModalWrapper'
+import BlogPost from '../../../blog/BlogPost'
 
 
 const BlogPostForm = () => {
 	const methods = useBlogPostForm()
+	const [showPostPreview, setShowPostPreview] = useState(false)
 
 	const submitForm = (values: BlogPostFormTypes, saveType: string) => {
 		console.log(values, saveType)
@@ -31,7 +35,7 @@ const BlogPostForm = () => {
 					<div className="col-span-1 flex flex-col justify-between shadow p-4">
 						<div>
 							<Link href="/" passHref>
-								Back
+								<p className="link-text">Back</p>
 							</Link>
 							<h1>New post</h1>
 							<h3>Title</h3>
@@ -49,6 +53,12 @@ const BlogPostForm = () => {
 							<ImageBrowser />
 						</div>
 						<div className="space-y-2 mt-6">
+							<Button
+								className="btn w-full"
+								onClick={() => setShowPostPreview(true)}
+							>
+								Preview
+							</Button>
 							<Button 
 								className="btn-secondary w-full"
 								onClick={methods.handleSubmit(data => submitForm(data, 'draft'))}
@@ -65,6 +75,11 @@ const BlogPostForm = () => {
 					</div>
 				</div>
 			</form>
+			{showPostPreview &&
+				<ModalWrapper fullScreen setShowModal={setShowPostPreview}>
+					<BlogPost title={methods.getValues('title')} content={methods.getValues('content')} />
+				</ModalWrapper>
+			}
 		</FormProvider>
 	)
 }
