@@ -5,13 +5,15 @@ from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
 
-from blog import views
+from blog.views import BlogViewSet
+from mediamanager.views import ImageViewSet
 
 
 API_ENDPOINT_PREFIX = 'api/'
 
 router = DefaultRouter()
-router.register(f'{API_ENDPOINT_PREFIX}blog', views.BlogViewSet, basename='blog')
+router.register(f'{API_ENDPOINT_PREFIX}blog', BlogViewSet, basename='blog')
+router.register(f'{API_ENDPOINT_PREFIX}images', ImageViewSet, basename='media-manager')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

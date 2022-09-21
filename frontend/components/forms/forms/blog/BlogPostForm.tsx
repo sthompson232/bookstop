@@ -4,6 +4,7 @@ import Link from 'next/link'
 import useBlogPostForm from '../../hooks/blog/use-blog-post-form'
 import { BlogPostFormTypes } from '../../hooks/blog/use-blog-post-form'
 // Local components
+import ImageBrowser from '../../../images/ImageBrowser'
 import TextEditor from '../../fields/TextEditor'
 import TextInput from '../../fields/TextInput'
 import Button from '../../../ui/Button'
@@ -32,7 +33,7 @@ const BlogPostForm = () => {
 							<Link href="/" passHref>
 								Back
 							</Link>
-							<h2>New post</h2>
+							<h1>New post</h1>
 							<h3>Title</h3>
 							<TextInput
 								control={methods.control}
@@ -44,8 +45,8 @@ const BlogPostForm = () => {
 								name="title"
 								error={methods.formState.errors?.title}
 							/>
-							<h3>Publish date</h3>
-							<h3>Upload photos</h3>
+							<h3>Browse images</h3>
+							<ImageBrowser />
 						</div>
 						<div className="space-y-2 mt-6">
 							<Button 

@@ -2,7 +2,7 @@ from django.db import models
 from accounts.models import User
 
 
-class TinyMCEImage(models.Model):
+class Image(models.Model):
 	file = models.FileField()
 	width = models.PositiveIntegerField()
 	height = models.PositiveBigIntegerField()

@@ -4,7 +4,7 @@ import { useController, UseControllerProps, FieldError } from 'react-hook-form'
 // Local components
 import Loader from '../../ui/Loader'
 // Constants
-import { FETCH_TINY_API_KEY_ENDPOINT, UPLOAD_TINYMCE_IMAGE } from '../../../constants/urls'
+import { FETCH_TINY_API_KEY_ENDPOINT, UPLOAD_TINYMCE_IMAGE_ENDPOINT } from '../../../constants/urls'
 import { getRestAPIHeaders } from '../../../utils/headers'
 
 import { getCookie } from '../../../utils/cookies'
@@ -67,11 +67,11 @@ const TextEditor = (props: PropTypes) => {
 					init={{
 						height: '100%',
 						images_file_types: 'jpeg,jpg,jif,jfif,png,gif,webp',
-						images_upload_url: UPLOAD_TINYMCE_IMAGE,
+						images_upload_url: UPLOAD_TINYMCE_IMAGE_ENDPOINT,
 						images_upload_handler: (blobInfo, progress) => new Promise((resolve, reject) => {
 							const token = 'Token ' + getCookie('token')
 							const xhr = new XMLHttpRequest();
-							xhr.open('POST', UPLOAD_TINYMCE_IMAGE, true)
+							xhr.open('POST', UPLOAD_TINYMCE_IMAGE_ENDPOINT, true)
 							xhr.setRequestHeader('Authorization', token)
 
 							xhr.upload.onprogress = (e) => {
@@ -105,7 +105,7 @@ const TextEditor = (props: PropTypes) => {
 						}),
 						// file_picker_callback: file_picker_callback,
 						file_picker_types: 'image',
-						menubar: 'edit insert format tools table',
+						menubar: 'insert format tools table',
 						menu: {
 							file: { title: 'File', items: 'newdocument restoredraft | preview | print ' },
 							edit: { title: 'Edit', items: 'undo redo | cut copy paste | selectall | searchreplace' },

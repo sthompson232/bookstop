@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from .models import TinyMCEImage
+from .models import Image
 
-class TinyMCEImageSerializer(serializers.ModelSerializer):
+class ImageSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = TinyMCEImage
+		model = Image
 		fields = ('__all__')

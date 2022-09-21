@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TinyMCEImage
+from .models import Image
 
 
-admin.site.register(TinyMCEImage)
+admin.site.register(Image)
