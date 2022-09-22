@@ -8,6 +8,7 @@ import { BlogPostFormTypes } from '../../hooks/blog/use-blog-post-form'
 import ImageBrowser from '../../../images/ImageBrowser'
 import TextEditor from '../../fields/TextEditor'
 import TextInput from '../../fields/TextInput'
+import Checkbox from '../../fields/Checkbox'
 import Button from '../../../ui/Button'
 import ModalWrapper from '../../../ui/ModalWrapper'
 import BlogPost from '../../../blog/BlogPost'
@@ -37,7 +38,6 @@ const BlogPostForm = () => {
 							<Link href="/" passHref>
 								<p className="link-text">Back</p>
 							</Link>
-							<h1>New post</h1>
 							<h3>Title</h3>
 							<TextInput
 								control={methods.control}
@@ -53,6 +53,11 @@ const BlogPostForm = () => {
 							<ImageBrowser />
 						</div>
 						<div className="space-y-2 mt-6">
+							<p>Set a publish date</p>
+							<Checkbox
+								control={methods.control}
+								name="custom-publish-date"
+							/>
 							<Button
 								className="btn w-full"
 								onClick={() => setShowPostPreview(true)}

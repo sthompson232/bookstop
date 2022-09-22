@@ -32,7 +32,7 @@ const LayoutWrapper = ({ children }: PropTypes) => {
 			</Head>
 			<span className="flex flex-col h-screen antialiased selection:bg-accent selection:text-white">
 				<Navbar />
-				<main className="prose max-w-none flex-grow">
+				<main className="prose prose-headings:my-0 prose-p:my-0 max-w-none flex-grow">
 					{children}
 				</main>
 				<Footer />

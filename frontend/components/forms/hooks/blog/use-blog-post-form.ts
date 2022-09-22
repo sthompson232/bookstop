@@ -6,11 +6,13 @@ import { blogPostSchema } from '../../schema/blog'
 export interface BlogPostFormTypes {
 	title: string,
 	content: string,
+	futurePublishDate: boolean,
 }
 
-const useBlogPostForm = () => {
+const useBlogPostForm = (defaultValues: BlogPostFormTypes) => {
 	const formMeta = useForm<BlogPostFormTypes>({
-		resolver: yupResolver(blogPostSchema)
+		resolver: yupResolver(blogPostSchema),
+		defaultValues: defaultValues
 	})
 	return formMeta
 }

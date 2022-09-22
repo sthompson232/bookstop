@@ -10,11 +10,11 @@ interface PropTypes {
 }
 
 const ModalWrapper = ({ children, setShowModal, fullScreen }: PropTypes) => {
-	const modalRef = useRef(null)
+	const modalRef = useRef<any>(null)
 
 	useEffect(() => {
 		if (fullScreen) return
-		const handleClickOutside = (e) => {
+		const handleClickOutside = (e: Event) => {
 			if (modalRef.current && !modalRef.current.contains(e.target)) {
 				setShowModal(false)
 			}
@@ -24,10 +24,10 @@ const ModalWrapper = ({ children, setShowModal, fullScreen }: PropTypes) => {
   }, [fullScreen, modalRef])
 
 	return (
-		<div className="fixed top-0 left-0 w-full h-full bg-black/80 flex justify-center items-center z-10">
+		<div className="fixed top-0 left-0 w-full h-full bg-black/80 flex justify-center items-center z-modal-backdrop">
 			<div className={fullScreen ? "w-full h-full" : ""} ref={modalRef}>
 				<div
-					className={classNames("bg-white p-4", {
+					className={classNames("bg-white p-4 z-modal", {
 						"w-full h-full": fullScreen,
 						"rounded-lg": !fullScreen,
 					})}
