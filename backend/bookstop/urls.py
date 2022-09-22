@@ -5,7 +5,7 @@ from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
 
-from blog.views import BlogViewSet
+from blog.views import BlogViewSet, PortalBlogViewSet
 from mediamanager.views import ImageViewSet
 
 
@@ -13,6 +13,7 @@ API_ENDPOINT_PREFIX = 'api/'
 
 router = DefaultRouter()
 router.register(f'{API_ENDPOINT_PREFIX}blog', BlogViewSet, basename='blog')
+router.register(f'{API_ENDPOINT_PREFIX}portal-blog', PortalBlogViewSet, basename='portal-blog')
 router.register(f'{API_ENDPOINT_PREFIX}images', ImageViewSet, basename='media-manager')
 
 urlpatterns = [

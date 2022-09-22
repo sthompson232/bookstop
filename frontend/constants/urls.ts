@@ -29,6 +29,8 @@ export const API_ROOT: string = `http://127.0.0.1:8000${API_VERSION}`
 
 // Blog
 export const BLOG_ROOT: string = `${API_ROOT}/blog`
+export const PORTAL_BLOG_ROOT: string = `${API_ROOT}/portal-blog`
+export const PORTAL_BLOG_CREATE_ENDPOINT: string = `${PORTAL_BLOG_ROOT}/`
 
 // Accounts
 export const ACCOUNTS_ROOT: string = `${API_ROOT}/accounts`

@@ -22,12 +22,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
 		'blog',
+		'emails',
 		'corsheaders',
 		'django_celery_beat',
-		'emails',
 		'mediamanager',
     'rest_framework',
     'knox',
+		'reversion',
 ]
 
 AUTH_USER_MODEL = "accounts.User"
@@ -64,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+		'reversion.middleware.RevisionMiddleware',
 ]
 
 ROOT_URLCONF = 'bookstop.urls'

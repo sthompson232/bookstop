@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { FormProvider } from 'react-hook-form'
 import Link from 'next/link'
 // Hooks
@@ -13,6 +14,10 @@ import Button from '../../../ui/Button'
 import ModalWrapper from '../../../ui/ModalWrapper'
 import BlogPost from '../../../blog/BlogPost'
 import DatePicker from '../../fields/DatePicker'
+// Constants
+import { PORTAL_BLOG_CREATE_ENDPOINT, PORTAL_BLOG_URL } from '../../../../constants/urls'
+// Utils
+import { getRestAPIHeaders } from '../../../../utils/headers'
 
 
 interface PropTypes {
@@ -20,6 +25,7 @@ interface PropTypes {
 }
 
 const BlogPostForm = ({ defaultValues }: PropTypes) => {
+	const router = useRouter()
 	const methods = useBlogPostForm(defaultValues)
 	const [showPostPreview, setShowPostPreview] = useState(false)
 	const enableFuturePublishDate = methods.watch('enableFuturePublishDate')
@@ -30,8 +36,27 @@ const BlogPostForm = ({ defaultValues }: PropTypes) => {
 		}
 	}, [enableFuturePublishDate, methods])
 
-	const submitForm = (values: BlogPostFormTypes, saveType: string) => {
-		console.log(values, saveType)
+	const submitForm = async (values: BlogPostFormTypes, saveType: string) => {
+		const payload = {
+			title: values.title,
+			content: values.content,
+			publish_date: values.publishDate,
+			save_type: saveType,
+		}
+		const result = await fetch(PORTAL_BLOG_CREATE_ENDPOINT, {
+			method: 'POST',
+			headers: {
+				...getRestAPIHeaders(),
+			},
+			body: JSON.stringify(payload)
+		}).then(res => {
+			if (res.ok) {
+				router.push(PORTAL_BLOG_URL)
+			} else {
+				return res.json()
+			}
+		})
+		console.log(result)
 	}
 
 	const renderPostPreview = () => {

@@ -15,7 +15,7 @@ class BlogPost(models.Model):
 	title = models.CharField(max_length=200)
 	content = models.TextField()
 	date_created = models.DateTimeField(auto_now_add=True)
-	publish_date = models.DateTimeField(auto_now_add=True)
+	publish_date = models.DateField()
 	status = models.PositiveSmallIntegerField(choices=STATUS , default=BLOG_PUBLISHED)
 
 	def __str__(self):

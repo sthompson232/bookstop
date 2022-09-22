@@ -28,6 +28,7 @@ const DatePicker = (props: PropTypes) => {
 	return (
 		<Fragment>
 			<ReactDatePicker
+				disabledKeyboardNavigation
 				onChange={e => onChange(e?.toISOString().split('T')[0])}
 				onBlur={onBlur}
 				selected={new Date(value)}
