@@ -56,3 +56,15 @@ html, body {
 .tox-statusbar__branding {
 	visibility: hidden;
 }
+
+/* react-datepicker customisation */
+.react-datepicker {
+	border: 1px solid #d1d5db !important;
+}
+.react-datepicker__header {
+	background-color: white !important;
+	border-bottom: 1px solid #d1d5db !important;
+}
+.react-datepicker__day--selected {
+	background-color: #f65900!important;
+}

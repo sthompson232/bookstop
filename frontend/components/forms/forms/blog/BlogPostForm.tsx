@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FormProvider } from 'react-hook-form'
 import Link from 'next/link'
 // Hooks
@@ -12,17 +12,42 @@ import Checkbox from '../../fields/Checkbox'
 import Button from '../../../ui/Button'
 import ModalWrapper from '../../../ui/ModalWrapper'
 import BlogPost from '../../../blog/BlogPost'
+import DatePicker from '../../fields/DatePicker'
 
 
-const BlogPostForm = () => {
-	const methods = useBlogPostForm()
+interface PropTypes {
+	defaultValues: BlogPostFormTypes,
+}
+
+const BlogPostForm = ({ defaultValues }: PropTypes) => {
+	const methods = useBlogPostForm(defaultValues)
 	const [showPostPreview, setShowPostPreview] = useState(false)
+	const enableFuturePublishDate = methods.watch('enableFuturePublishDate')
+
+	useEffect(() => {
+		if (!enableFuturePublishDate) {
+			methods.setValue('publishDate', new Date().toISOString().split('T')[0])
+		}
+	}, [enableFuturePublishDate, methods])
 
 	const submitForm = (values: BlogPostFormTypes, saveType: string) => {
 		console.log(values, saveType)
 	}
 
-	return (
+	const renderPostPreview = () => {
+		const [title, content, enableFuturePublishDate, publishDate] = methods.getValues(['title', 'content', 'enableFuturePublishDate', 'publishDate'])
+		return (
+			<ModalWrapper fullScreen setShowModal={setShowPostPreview}>
+				<BlogPost
+					title={title}
+					content={content}
+					publishDate={enableFuturePublishDate ? publishDate : new Date().toString()}
+				/>
+			</ModalWrapper>
+		)
+	}
+
+	return methods && (
 		<FormProvider {...methods}>
 			<form className="h-full">
 				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 h-full">
@@ -38,26 +63,34 @@ const BlogPostForm = () => {
 							<Link href="/" passHref>
 								<p className="link-text">Back</p>
 							</Link>
-							<h3>Title</h3>
+							<h3 className="pt-6 pb-2">Title</h3>
 							<TextInput
 								control={methods.control}
 								autoFocus
 								type="text"
 								autoComplete="title"
-								id="title"
 								placeholder="Title"
 								name="title"
 								error={methods.formState.errors?.title}
 							/>
-							<h3>Browse images</h3>
+							<h3 className="pt-6 pb-2">Browse images</h3>
 							<ImageBrowser />
-						</div>
-						<div className="space-y-2 mt-6">
-							<p>Set a publish date</p>
+							<h3 className="pt-6 pb-2">Set a future publish date</h3>
 							<Checkbox
 								control={methods.control}
-								name="custom-publish-date"
+								name="enableFuturePublishDate"
 							/>
+							{enableFuturePublishDate &&
+								<div className="flex justify-center pt-3">
+									<DatePicker
+										name="publishDate"
+										control={methods.control}
+										error={methods.formState.errors?.publishDate}
+									/>
+								</div>
+							}
+						</div>
+						<div className="space-y-2 mt-6">
 							<Button
 								className="btn w-full"
 								onClick={() => setShowPostPreview(true)}
@@ -80,11 +113,7 @@ const BlogPostForm = () => {
 					</div>
 				</div>
 			</form>
-			{showPostPreview &&
-				<ModalWrapper fullScreen setShowModal={setShowPostPreview}>
-					<BlogPost title={methods.getValues('title')} content={methods.getValues('content')} />
-				</ModalWrapper>
-			}
+			{showPostPreview && renderPostPreview()}
 		</FormProvider>
 	)
 }

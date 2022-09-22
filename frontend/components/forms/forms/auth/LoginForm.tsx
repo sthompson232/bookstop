@@ -58,7 +58,6 @@ const LoginForm = () => {
 					autoFocus
 					type="email"
 					autoComplete="email"
-					id="email"
 					placeholder="Email"
 					name="email"
 					error={methods.formState.errors?.email}
@@ -67,7 +66,6 @@ const LoginForm = () => {
 					control={methods.control}
 					type="password"
 					autoComplete="current-password"
-					id="current-password"
 					placeholder="Password"
 					name="password"
 					error={methods.formState.errors?.password}

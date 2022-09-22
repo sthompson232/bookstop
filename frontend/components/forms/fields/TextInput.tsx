@@ -30,6 +30,7 @@ const TextInput = (props: PropTypes) => {
 					onChange={onChange}
 					onBlur={onBlur}
 					ref={ref}
+					id={name}
 					aria-invalid="true"
 					aria-describedby={`${name}-error`}
 				/>

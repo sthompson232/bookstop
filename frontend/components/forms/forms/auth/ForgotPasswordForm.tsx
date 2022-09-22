@@ -47,7 +47,6 @@ const ForgotPasswordForm = ({ setFormSubmittedSuccessfully }: PropTypes) => {
 					control={methods.control}
 					type="email"
 					autoComplete="email"
-					id="email"
 					placeholder="Email"
 					name="email"
 					error={methods.formState.errors?.email}
