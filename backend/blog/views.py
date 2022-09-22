@@ -23,13 +23,14 @@ class PortalBlogViewSet(viewsets.ModelViewSet):
 		else:
 			post_status = BLOG_PUBLISHED
 
-		BlogPost.objects.create({
+		data = {
 			'title': request.data['title'],
 			'content': request.data['content'],
 			'user': request.user,
 			'publish_date': publish_date,
 			'status': post_status,
-		})
+		}
+		BlogPost.objects.create(**data)
 		return Response(status=status.HTTP_201_CREATED)
 
 

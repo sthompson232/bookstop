@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { FormProvider } from 'react-hook-form'
 import Link from 'next/link'
@@ -18,6 +18,7 @@ import DatePicker from '../../fields/DatePicker'
 import { PORTAL_BLOG_CREATE_ENDPOINT, PORTAL_BLOG_URL } from '../../../../constants/urls'
 // Utils
 import { getRestAPIHeaders } from '../../../../utils/headers'
+import { AlertContext } from '../../../alerts/AlertContextProvider'
 
 
 interface PropTypes {
@@ -25,6 +26,7 @@ interface PropTypes {
 }
 
 const BlogPostForm = ({ defaultValues }: PropTypes) => {
+	const { sendAlert } = useContext(AlertContext)
 	const router = useRouter()
 	const methods = useBlogPostForm(defaultValues)
 	const [showPostPreview, setShowPostPreview] = useState(false)
@@ -52,11 +54,11 @@ const BlogPostForm = ({ defaultValues }: PropTypes) => {
 		}).then(res => {
 			if (res.ok) {
 				router.push(PORTAL_BLOG_URL)
+				sendAlert('success', `${values.title} - Post created`)
 			} else {
-				return res.json()
+				sendAlert('error', 'Error - Please try again later')
 			}
 		})
-		console.log(result)
 	}
 
 	const renderPostPreview = () => {
