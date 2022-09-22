@@ -13,7 +13,7 @@ export const PORTAL_URL: string = '/portal'
 // BLOG
 export const PORTAL_BLOG_URL: string = `${PORTAL_URL}/blog`
 export const PORTAL_BLOG_NEW_URL: string = `${PORTAL_BLOG_URL}/new`
-export const PORTAL_BLOG_EDIT_URL: string = `${PORTAL_BLOG_URL}/edit`
+export const PORTAL_BLOG_EDIT_URL: string = `${PORTAL_BLOG_URL}/edit/$(id)`
 
 
 export const AUTHENTICATED_ROUTES: string[] = [PORTAL_URL, PORTAL_BLOG_NEW_URL]
@@ -31,6 +31,8 @@ export const API_ROOT: string = `http://127.0.0.1:8000${API_VERSION}`
 export const BLOG_ROOT: string = `${API_ROOT}/blog`
 export const PORTAL_BLOG_ROOT: string = `${API_ROOT}/portal-blog`
 export const PORTAL_BLOG_CREATE_ENDPOINT: string = `${PORTAL_BLOG_ROOT}/`
+export const PORTAL_BLOG_LIST_ENDPOINT: string = `${PORTAL_BLOG_ROOT}/`
+export const PORTAL_BLOG_RETRIEVE_ENDPOINT: string = `${PORTAL_BLOG_ROOT}/$(id)`
 
 // Accounts
 export const ACCOUNTS_ROOT: string = `${API_ROOT}/accounts`

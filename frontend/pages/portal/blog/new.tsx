@@ -8,7 +8,7 @@ import { BlogPostFormTypes } from '../../../components/forms/hooks/blog/use-blog
 
 const BlogNewPage: NextPage<{ defaultValues: BlogPostFormTypes }> = ({ defaultValues }) => {
 	return (
-		<BlogPostForm defaultValues={defaultValues} />
+		<BlogPostForm defaultValues={defaultValues} editing={false} />
 	)
 }
 

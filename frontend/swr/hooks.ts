@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import type { SWRConfiguration } from 'swr'
 // Constants
-import { GET_USER_ENDPOINT, AUTHENTICATED_ROUTES } from '../constants/urls'
+import { GET_USER_ENDPOINT, AUTHENTICATED_ROUTES, PORTAL_BLOG_LIST_ENDPOINT } from '../constants/urls'
 import { defaultFetcher } from './fetchers'
 // Utils
 import { getCookie, setCookie } from '../utils/cookies'
@@ -34,5 +34,22 @@ export const useUser = () => {
 		isAuthenticated,
 		user: data,
 		mutate
+	}
+}
+
+
+export const useBlogPost = () => {
+	const config: SWRConfiguration = {
+		refreshInterval: 30000,
+		shouldRetryOnError: false,
+		revalidateOnFocus: true,
+	}
+	const { data, mutate, error } = useSWR(PORTAL_BLOG_LIST_ENDPOINT, defaultFetcher, config)
+	const isLoading = !data && !error
+	return {
+		data,
+		mutate,
+		error,
+		isLoading
 	}
 }

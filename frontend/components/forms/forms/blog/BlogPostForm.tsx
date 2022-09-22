@@ -23,9 +23,10 @@ import { AlertContext } from '../../../alerts/AlertContextProvider'
 
 interface PropTypes {
 	defaultValues: BlogPostFormTypes,
+	editing: boolean,
 }
 
-const BlogPostForm = ({ defaultValues }: PropTypes) => {
+const BlogPostForm = ({ defaultValues, editing }: PropTypes) => {
 	const { sendAlert } = useContext(AlertContext)
 	const router = useRouter()
 	const methods = useBlogPostForm(defaultValues)
