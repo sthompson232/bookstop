@@ -1,9 +1,28 @@
 {
+  "env": {
+    "node": true,
+    "browser": true,
+    "es6": true
+  },
   "extends": ["next", "prettier", "airbnb"],
   "rules": {
     "@next/next/no-img-element": "off",
     "react/react-in-jsx-scope": "off",
     "react/function-component-definition": "off",
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/default-props-match-prop-types": "off",
+    "react/button-has-type": "off",
+    "consistent-return": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
   }
 }

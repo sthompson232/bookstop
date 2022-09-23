@@ -1,20 +1,19 @@
-import Link from 'next/link'
+import Link from 'next/link';
 // Local components
-import AdminPanel from './components/AdminPanel'
+import AdminPanel from './components/AdminPanel';
 // Constants
-import { BLOG_URL, HOME_URL } from '../../../constants/urls'
-
+import { BLOG_URL, HOME_URL } from '../../../constants/urls';
 
 const Navbar = () => {
   const pages = [
     {
-      "name": "Home",
-      "link": HOME_URL
+      name: 'Home',
+      link: HOME_URL,
     },
     {
-      "name": "Blog",
-      "link": BLOG_URL
-    }
+      name: 'Blog',
+      link: BLOG_URL,
+    },
   ];
   return (
     <header>
@@ -24,7 +23,7 @@ const Navbar = () => {
           <h1 className="text-3xl font-bold tracking-wider cursor-pointer">Bookstop</h1>
         </Link>
         <div className="flex space-x-6">
-          {pages.map(page => (
+          {pages.map((page) => (
             <Link href={page.link} passHref key={page.link}>
               <h4 className="text-lg font-semibold tracking-wider cursor-pointer">{page.name}</h4>
             </Link>
@@ -32,7 +31,7 @@ const Navbar = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

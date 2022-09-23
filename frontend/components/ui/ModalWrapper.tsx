@@ -12,7 +12,7 @@ const ModalWrapper = ({ children, setShowModal, fullScreen }: PropTypes) => {
   const modalRef = useRef<any>(null);
 
   useEffect(() => {
-    if (fullScreen) return undefined;
+    if (fullScreen) return;
     const handleClickOutside = (e: Event) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
         setShowModal(false);
