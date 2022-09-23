@@ -14,7 +14,7 @@ from .serializers import BlogPostSerializer
 class PortalBlogViewSet(viewsets.ModelViewSet):
 	permission_classes = (IsAuthenticated,)
 	serializer_class = BlogPostSerializer
-	http_method_names = ['get', 'post', 'put']
+	http_method_names = ['get', 'post', 'put', 'delete']
 	pagination_class = BlogPostPaginator
 	queryset = BlogPost.objects.all()
 
@@ -67,6 +67,11 @@ class PortalBlogViewSet(viewsets.ModelViewSet):
 			'status': post_status,
 		}
 		BlogPost.objects.filter(pk=pk).update(**data)
+		return Response(status=status.HTTP_200_OK)
+
+	def destroy(self, request, pk=None):
+		post = get_object_or_404(BlogPost, pk=pk)
+		post.delete()
 		return Response(status=status.HTTP_200_OK)
 
 

@@ -34,6 +34,7 @@ export const PORTAL_BLOG_CREATE_ENDPOINT: string = `${PORTAL_BLOG_ROOT}/`
 export const PORTAL_BLOG_LIST_ENDPOINT: string = `${PORTAL_BLOG_ROOT}/`
 export const PORTAL_BLOG_RETRIEVE_ENDPOINT: string = `${PORTAL_BLOG_ROOT}/$(id)`
 export const PORTAL_BLOG_UPDATE_ENDPOINT: string = `${PORTAL_BLOG_ROOT}/$(id)`
+export const PORTAL_BLOG_DELETE_ENDPOINT: string = `${PORTAL_BLOG_ROOT}/$(id)`
 
 // Accounts
 export const ACCOUNTS_ROOT: string = `${API_ROOT}/accounts`
