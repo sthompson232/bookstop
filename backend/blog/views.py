@@ -52,6 +52,23 @@ class PortalBlogViewSet(viewsets.ModelViewSet):
 		serializer = BlogPostSerializer(post)
 		return Response(serializer.data, status=status.HTTP_200_OK)
 
+	def update(self, request, pk=None):
+		publish_date = datetime.strptime(request.data['publish_date'], '%Y-%m-%d').date()
+		if request.data['save_type'] == 'draft':
+			post_status = BLOG_DRAFT
+		elif publish_date > date.today():
+			post_status = BLOG_PENDING
+		else:
+			post_status = BLOG_PUBLISHED
+		data = {
+			'title': request.data['title'],
+			'content': request.data['content'],
+			'publish_date': publish_date,
+			'status': post_status,
+		}
+		BlogPost.objects.filter(pk=pk).update(**data)
+		return Response(status=status.HTTP_200_OK)
+
 
 class BlogViewSet(viewsets.ModelViewSet):
 	permission_classes = (AllowAny,)

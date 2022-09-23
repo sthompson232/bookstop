@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 // Hooks
 import { useBlogPost } from '../../../swr/hooks'
 // Constants
@@ -18,9 +17,7 @@ interface BlogPost {
 }
 
 const PortalBlogPage: NextPage = () => {
-	const router = useRouter()
 	const { data, isLoading } = useBlogPost()
-	console.log(data)
 
 	return (
 		<div className="container">
@@ -33,9 +30,11 @@ const PortalBlogPage: NextPage = () => {
 				) : (
 					<div>
 						{data && data.results.map((post: BlogPost) => (
-							<Link href={PORTAL_BLOG_EDIT_URL.replace('$(id)', post.id.toString())}>
-							{post.title}
-							</Link>
+							<div key={post.id}>
+								<Link href={PORTAL_BLOG_EDIT_URL.replace('$(id)', post.id.toString())}>
+									{post.title}
+								</Link>
+							</div>
 						))}
 					</div>
 				)

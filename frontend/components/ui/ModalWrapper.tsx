@@ -32,8 +32,11 @@ const ModalWrapper = ({ children, setShowModal, fullScreen }: PropTypes) => {
 						"rounded-lg": !fullScreen,
 					})}
 				>
-					<div className="ml-auto w-8 h-8 cursor-pointer" onClick={() => setShowModal(false)}><XMarkIcon /></div>
-						{children}
+					<XMarkIcon
+						onClick={() => setShowModal(false)}
+						className="ml-auto w-8 h-8 cursor-pointer text-gray-500 hover:text-gray-800 transition-all rounded-full hover:bg-gray-200"
+					/>
+					{children}
 				</div>
 			</div>
 		</div>

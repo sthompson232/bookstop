@@ -15,11 +15,10 @@ interface PropTypes extends UseControllerProps, React.InputHTMLAttributes<HTMLIn
 }
 
 const DatePicker = (props: PropTypes) => {
-	const { control, defaultValue, error, name } = props
+	const { control, error, name } = props
 	const { field: { onChange, onBlur, ref, value } } = useController({
 		name,
 		control,
-		defaultValue
 	});
 	const months = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"

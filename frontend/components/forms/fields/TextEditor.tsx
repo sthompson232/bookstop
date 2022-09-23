@@ -22,12 +22,11 @@ const TextEditor = (props: PropTypes) => {
 	const tinyMCERef = useRef<any>()
 	const [fetchingApiKey, setFetchingApiKey] = useState(false);
 	const [fetchError, setFetchError] = useState(false);
-	const { name, control, defaultValue, error } = props
+	const { name, control, error } = props
 	const { field: { onChange, onBlur, value, ref } } = useController({
 		name,
 		control,
 		rules: { required: true },
-		defaultValue
 	});
 
 	useEffect(() => {

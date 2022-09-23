@@ -11,11 +11,10 @@ interface PropTypes extends UseControllerProps, React.InputHTMLAttributes<HTMLIn
 }
 
 const TextInput = (props: PropTypes) => {
-	const { name, control, defaultValue, error } = props
-	const { field: { onChange, onBlur, ref } } = useController({
+	const { name, control, error } = props
+	const { field: { onChange, onBlur, ref, value } } = useController({
 		name,
-		control,
-		defaultValue
+		control
 	});
 
 	return (
@@ -31,6 +30,7 @@ const TextInput = (props: PropTypes) => {
 					onBlur={onBlur}
 					ref={ref}
 					id={name}
+					value={value}
 					aria-invalid="true"
 					aria-describedby={`${name}-error`}
 				/>

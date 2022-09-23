@@ -4,10 +4,12 @@ import { blogPostSchema } from '../../schema/blog'
 
 
 export interface BlogPostFormTypes {
+	id?: number,
+	user?: number,
+	status?: number,
 	title: string,
 	content: string,
-	enableFuturePublishDate: boolean,
-	publishDate: string,
+	publish_date: string,
 }
 
 const useBlogPostForm = (defaultValues: BlogPostFormTypes) => {
