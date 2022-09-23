@@ -11,14 +11,14 @@ import { defaultFetcher } from '../swr/fetchers'
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-		<SWRConfig value={{ fetcher: defaultFetcher }}>
-			<AlertContextProvider>
-				<LayoutWrapper>
-					<Component {...pageProps} />
-				</LayoutWrapper>
-			</AlertContextProvider>
-		</SWRConfig>
-	)
+    <SWRConfig value={{ fetcher: defaultFetcher }}>
+      <AlertContextProvider>
+        <LayoutWrapper>
+          <Component {...pageProps} />
+        </LayoutWrapper>
+      </AlertContextProvider>
+    </SWRConfig>
+  )
 }
 
 export default App

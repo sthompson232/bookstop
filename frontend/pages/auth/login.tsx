@@ -4,11 +4,11 @@ import LoginForm from '../../components/forms/forms/auth/LoginForm'
 
 
 const Login: NextPage = () => {
-	return (
-		<div className="container">
-			<LoginForm />
-		</div>
-	)
+  return (
+    <div className="container">
+      <LoginForm />
+    </div>
+  )
 }
 
 export default Login

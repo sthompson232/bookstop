@@ -4,14 +4,14 @@ import { forgotPasswordSchema } from '../../schema/auth'
 
 
 export interface ForgotPasswordFormTypes {
-	email: string
+  email: string
 }
 
 const useForgotPasswordForm = () => {
-	const formMeta = useForm<ForgotPasswordFormTypes>({
-		resolver: yupResolver(forgotPasswordSchema)
-	})
-	return formMeta
+  const formMeta = useForm<ForgotPasswordFormTypes>({
+    resolver: yupResolver(forgotPasswordSchema)
+  })
+  return formMeta
 }
 
 export default useForgotPasswordForm

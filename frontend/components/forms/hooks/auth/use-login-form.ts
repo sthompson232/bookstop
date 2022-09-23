@@ -4,15 +4,15 @@ import { loginSchema } from '../../schema/auth'
 
 
 export interface LoginFormTypes {
-	email: string,
-	password: string,
+  email: string,
+  password: string,
 }
 
 const useLoginForm = () => {
-	const formMeta = useForm<LoginFormTypes>({
-		resolver: yupResolver(loginSchema)
-	})
-	return formMeta
+  const formMeta = useForm<LoginFormTypes>({
+    resolver: yupResolver(loginSchema)
+  })
+  return formMeta
 }
 
 export default useLoginForm

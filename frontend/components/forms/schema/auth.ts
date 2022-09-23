@@ -3,12 +3,12 @@ import { REQUIRED, VALID_EMAIL, PASSWORD_MATCH, PASSWORD_MIN } from '../../../co
 
 
 export const forgotPasswordSchema = yup.object().shape({
-	email: yup.string().email(VALID_EMAIL).required(REQUIRED),
+  email: yup.string().email(VALID_EMAIL).required(REQUIRED),
 })
 
 export const loginSchema = yup.object().shape({
-	email: yup.string().email(VALID_EMAIL).required(REQUIRED),
-	password: yup.string().required(REQUIRED)
+  email: yup.string().email(VALID_EMAIL).required(REQUIRED),
+  password: yup.string().required(REQUIRED)
 })
 
 export const resetPasswordSchema = yup.object().shape({

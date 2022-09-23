@@ -3,21 +3,21 @@ import type { NextPage, GetServerSideProps } from 'next'
 import BlogPostForm from '../../../components/forms/forms/blog/BlogPostForm'
 // Constants
 import { blogPostDefaultValues } from '../../../components/forms/schema/blog'
-import { BlogPostFormTypes } from '../../../components/forms/hooks/blog/use-blog-post-form'
+import { BlogPostType } from '../../../constants/types/blog'
 
 
-const BlogNewPage: NextPage<{ defaultValues: BlogPostFormTypes }> = ({ defaultValues }) => {
-	return (
-		<BlogPostForm defaultValues={defaultValues} editing={false} />
-	)
+const BlogNewPage: NextPage<{ defaultValues: BlogPostType }> = ({ defaultValues }) => {
+  return (
+    <BlogPostForm defaultValues={defaultValues} editing={false} />
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	return {
-		props: {
-			defaultValues: blogPostDefaultValues,
-		}
-	}
+  return {
+    props: {
+      defaultValues: blogPostDefaultValues,
+    }
+  }
 }
 
 export default BlogNewPage

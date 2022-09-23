@@ -23,8 +23,8 @@ export const PUBLIC_ROUTES: string[] = [HOME_URL, BLOG_URL]
 // API
 export const API_VERSION: string = '/api'
 export const API_BASE_PATH: string = process.env.NODE_ENV === 'development'
-	? `http://localhost:8000${API_VERSION}`
-	: `https://troubador-portal.co.uk${API_VERSION}`
+  ? `http://localhost:8000${API_VERSION}`
+  : `https://troubador-portal.co.uk${API_VERSION}`
 
 export const API_ROOT: string = `http://127.0.0.1:8000${API_VERSION}`
 

@@ -4,67 +4,67 @@
 
 
 @layer components {
-	/* BUTTONS */
-	.btn-base {
-		@apply flex items-center justify-center font-semibold uppercase tracking-wide relative transition-all duration-300 shadow py-2 px-8 text-sm cursor-pointer
-	}
-	.btn {
-		@apply btn-base bg-black text-white hover:bg-gray-800
-	}
-	.btn-secondary {
-		@apply btn-base bg-white text-black border-gray-500 border-2 hover:bg-gray-100
-	}
-	.btn-inverse {
-		@apply btn-base bg-white text-black hover:bg-gray-100
-	}
-	.btn-inverse-secondary {
-		@apply btn-base bg-black text-white border-gray-500 border-2 hover:bg-gray-800
-	}
-	.btn-loading {
-		@apply brightness-105 cursor-not-allowed
-	}
+  /* BUTTONS */
+  .btn-base {
+    @apply flex items-center justify-center font-semibold uppercase tracking-wide relative transition-all duration-300 shadow py-2 px-8 text-sm cursor-pointer
+  }
+  .btn {
+    @apply btn-base bg-black text-white hover:bg-gray-800
+  }
+  .btn-secondary {
+    @apply btn-base bg-white text-black border-gray-500 border-2 hover:bg-gray-100
+  }
+  .btn-inverse {
+    @apply btn-base bg-white text-black hover:bg-gray-100
+  }
+  .btn-inverse-secondary {
+    @apply btn-base bg-black text-white border-gray-500 border-2 hover:bg-gray-800
+  }
+  .btn-loading {
+    @apply brightness-105 cursor-not-allowed
+  }
 
-	/* FORM FIELDS */
-	.text-input {
-		@apply placeholder-gray-500 focus:border-accent border-gray-300 focus:ring-accent
-	}
-	.text-input-error {
-		@apply placeholder-red-500 focus:border-red-500 border-red-500 focus:ring-red-500 text-red-500
-	}
+  /* FORM FIELDS */
+  .text-input {
+    @apply placeholder-gray-500 focus:border-accent border-gray-300 focus:ring-accent
+  }
+  .text-input-error {
+    @apply placeholder-red-500 focus:border-red-500 border-red-500 focus:ring-red-500 text-red-500
+  }
 
-	/* TEXT STYLES */
-	.error-text {
-		@apply text-red-500 text-sm font-semibold mt-1
-	}
-	.action-text {
-		@apply inline text-blue-500 text-sm font-semibold cursor-pointer hover:text-blue-600 transition-all
-	}
-	.link-text {
-		@apply underline text-black text-sm font-semibold cursor-pointer hover:text-accent transition-all my-1
-	}
-	
-	/* FORMATTING */
-	.container {
-		@apply max-w-7xl mx-auto p-4 sm:p-8
-	}
+  /* TEXT STYLES */
+  .error-text {
+    @apply text-red-500 text-sm font-semibold mt-1
+  }
+  .action-text {
+    @apply inline text-blue-500 text-sm font-semibold cursor-pointer hover:text-blue-600 transition-all
+  }
+  .link-text {
+    @apply underline text-black text-sm font-semibold cursor-pointer hover:text-accent transition-all my-1
+  }
+  
+  /* FORMATTING */
+  .container {
+    @apply max-w-7xl mx-auto p-4 sm:p-8
+  }
 }
 
 html, body {
-	height: 100%;
+  height: 100%;
 }
 /* Hide TinyMCE logo */
 .tox-statusbar__branding {
-	visibility: hidden;
+  visibility: hidden;
 }
 
 /* react-datepicker customisation */
 .react-datepicker {
-	border: 1px solid #d1d5db !important;
+  border: 1px solid #d1d5db !important;
 }
 .react-datepicker__header {
-	background-color: white !important;
-	border-bottom: 1px solid #d1d5db !important;
+  background-color: white !important;
+  border-bottom: 1px solid #d1d5db !important;
 }
 .react-datepicker__day--selected {
-	background-color: #f65900!important;
+  background-color: #f65900!important;
 }

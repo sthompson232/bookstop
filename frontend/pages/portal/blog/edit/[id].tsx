@@ -7,40 +7,40 @@ import { BlogPostType } from '../../../../constants/types/blog'
 
 
 interface PropTypes {
-	defaultValues: BlogPostType,
-	blogPostId: number,
+  defaultValues: BlogPostType,
+  blogPostId: number,
 }
 
 const PortalBlogPostEdit: NextPage<PropTypes> = ({ blogPostId, defaultValues }) => {
-	return (
-		<BlogPostForm
-			defaultValues={defaultValues}
-			editing
-			blogPostId={blogPostId}
-		/>
-	)
+  return (
+    <BlogPostForm
+      defaultValues={defaultValues}
+      editing
+      blogPostId={blogPostId}
+    />
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	const blogPostId = context?.params?.id
-	let defaultValues
-	if (typeof blogPostId === 'string') {
-		defaultValues = await fetch(`${PORTAL_BLOG_RETRIEVE_ENDPOINT.replace('$(id)', blogPostId)}`, {
-			method: 'GET',
-			headers: {
-				'Authorization': `Token ${context.req.cookies.token}`,
-				'Content-Type': 'application/json',
-				'Accept': 'application/json',
-			}
-		}).then(res => res.json())
-	}
+  const blogPostId = context?.params?.id
+  let defaultValues
+  if (typeof blogPostId === 'string') {
+    defaultValues = await fetch(`${PORTAL_BLOG_RETRIEVE_ENDPOINT.replace('$(id)', blogPostId)}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Token ${context.req.cookies.token}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    }).then(res => res.json())
+  }
 
-	return {
-		props: {
-			defaultValues,
-			blogPostId,
-		}
-	}
+  return {
+    props: {
+      defaultValues,
+      blogPostId,
+    }
+  }
 }
 
 

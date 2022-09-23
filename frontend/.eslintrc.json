@@ -1,3 +1,9 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next", "prettier", "airbnb"],
+  "rules": {
+    "@next/next/no-img-element": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/function-component-definition": "off",
+    "react/jsx-filename-extension": "off"
+  }
 }
