@@ -1,6 +1,7 @@
 // FRONTEND
 export const HOME_URL: string = '/'
 export const BLOG_URL: string = '/blog'
+export const BLOG_DETAIL_URL: string = `${BLOG_URL}/$(id)/$(slug)`
 
 // AUTH
 export const AUTH_URL: string = '/auth'
@@ -29,6 +30,9 @@ export const API_ROOT: string = `http://127.0.0.1:8000${API_VERSION}`
 
 // Blog
 export const BLOG_ROOT: string = `${API_ROOT}/blog`
+export const BLOG_LIST_ENDPOINT: string = `${BLOG_ROOT}/`
+export const BLOG_RETREIVE_ENDPOINT: string = `${BLOG_ROOT}/$(id)`
+
 export const PORTAL_BLOG_ROOT: string = `${API_ROOT}/portal-blog`
 export const PORTAL_BLOG_CREATE_ENDPOINT: string = `${PORTAL_BLOG_ROOT}/`
 export const PORTAL_BLOG_LIST_ENDPOINT: string = `${PORTAL_BLOG_ROOT}/`

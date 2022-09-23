@@ -1,19 +1,11 @@
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { blogPostSchema } from '../../schema/blog'
+import { BlogPostType } from '../../../../constants/types/blog'
 
 
-export interface BlogPostFormTypes {
-	id?: number,
-	user?: number,
-	status?: number,
-	title: string,
-	content: string,
-	publish_date: string,
-}
-
-const useBlogPostForm = (defaultValues: BlogPostFormTypes) => {
-	const formMeta = useForm<BlogPostFormTypes>({
+const useBlogPostForm = (defaultValues: BlogPostType) => {
+	const formMeta = useForm<BlogPostType>({
 		resolver: yupResolver(blogPostSchema),
 		defaultValues
 	})

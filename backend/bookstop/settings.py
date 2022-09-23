@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
 		'blog',
+		'core',
 		'emails',
 		'corsheaders',
 		'django_celery_beat',

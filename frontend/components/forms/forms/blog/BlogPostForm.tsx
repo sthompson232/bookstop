@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { Cog6ToothIcon } from '@heroicons/react/20/solid'
 // Hooks
 import useBlogPostForm from '../../hooks/blog/use-blog-post-form'
-import { BlogPostFormTypes } from '../../hooks/blog/use-blog-post-form'
 // Local components
 import { AlertContext } from '../../../alerts/AlertContextProvider'
 import ImageBrowser from '../../../images/ImageBrowser'
@@ -18,6 +17,7 @@ import DatePicker from '../../fields/DatePicker'
 // Constants
 import { PORTAL_BLOG_CREATE_ENDPOINT, PORTAL_BLOG_UPDATE_ENDPOINT, PORTAL_BLOG_URL } from '../../../../constants/urls'
 import { BLOG_DRAFT } from '../../../../constants/blog'
+import { BlogPostType } from '../../../../constants/types/blog'
 import { GENERIC_ERROR_MESSAGE } from '../../../../constants/error-messages'
 // Utils
 import { getRestAPIHeaders } from '../../../../utils/headers'
@@ -25,7 +25,7 @@ import { getRestAPIHeaders } from '../../../../utils/headers'
 
 interface PropTypes {
 	blogPostId?: number,
-	defaultValues: BlogPostFormTypes,
+	defaultValues: BlogPostType,
 	editing: boolean,
 }
 
@@ -36,7 +36,7 @@ const BlogPostForm = ({ blogPostId, defaultValues, editing }: PropTypes) => {
 	const [showPostPreview, setShowPostPreview] = useState(false)
 	const [showPostSettings, setShowPostSettings] = useState(false)
 
-	const submitForm = async (values: BlogPostFormTypes, saveType: string) => {
+	const submitForm = async (values: BlogPostType, saveType: string) => {
 		const payload = {
 			title: values.title,
 			content: values.content,
@@ -53,7 +53,7 @@ const BlogPostForm = ({ blogPostId, defaultValues, editing }: PropTypes) => {
 			}).then(res => {
 				if (res.ok) {
 					router.push(PORTAL_BLOG_URL)
-					sendAlert('success', `${values.title} - Post updated`)
+					sendAlert('success', `Post updated - ${values.title}`)
 				} else {
 					sendAlert('error', GENERIC_ERROR_MESSAGE)
 				}
@@ -68,7 +68,7 @@ const BlogPostForm = ({ blogPostId, defaultValues, editing }: PropTypes) => {
 			}).then(res => {
 				if (res.ok) {
 					router.push(PORTAL_BLOG_URL)
-					sendAlert('success', `${values.title} - Post created`)
+					sendAlert('success', `Post created - ${values.title}`)
 				} else {
 					sendAlert('error', GENERIC_ERROR_MESSAGE)
 				}
@@ -77,13 +77,15 @@ const BlogPostForm = ({ blogPostId, defaultValues, editing }: PropTypes) => {
 	}
 
 	const renderPostPreview = () => {
-		const [title, content, publishDate] = methods.getValues(['title', 'content', 'publish_date'])
+		const [title, content, publishDate, user] = methods.getValues(['title', 'content', 'publish_date', 'user'])
+		console.log(user)
 		return (
 			<ModalWrapper fullScreen setShowModal={setShowPostPreview}>
 				<BlogPost
 					title={title}
 					content={content}
 					publishDate={publishDate}
+					user={user}
 				/>
 			</ModalWrapper>
 		)

@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 
+from core.serializers import DynamicFieldsModelSerializer
 from .models import User
 
 from rest_framework import serializers
@@ -29,7 +30,7 @@ class CustomAuthTokenSerializer(serializers.Serializer):
 		return attrs
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(DynamicFieldsModelSerializer):
 	class Meta:
 		model = User
-		fields = ('email', 'first_name', 'last_name')
+		fields = '__all__'

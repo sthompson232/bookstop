@@ -3,18 +3,11 @@ import type { NextPage, GetServerSideProps } from 'next'
 import BlogPostForm from '../../../../components/forms/forms/blog/BlogPostForm'
 // Constants
 import { PORTAL_BLOG_RETRIEVE_ENDPOINT } from '../../../../constants/urls'
+import { BlogPostType } from '../../../../constants/types/blog'
 
-
-interface BlogPost {
-	id: number,
-	user: number,
-	title: string,
-	content: string,
-	publish_date: string,
-}
 
 interface PropTypes {
-	defaultValues: BlogPost,
+	defaultValues: BlogPostType,
 	blogPostId: number,
 }
 

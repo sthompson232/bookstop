@@ -32,7 +32,7 @@ class GetUserView(views.APIView):
 
 	def get(self, request):
 		if request.user.is_authenticated:
-			user = UserSerializer(request.user).data
+			user = UserSerializer(request.user, fields=('email', 'first_name', 'last_name')).data
 			return Response(user, status=status.HTTP_200_OK)
 		else:
 			return Response({}, status=status.HTTP_403_FORBIDDEN)

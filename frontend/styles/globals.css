@@ -45,7 +45,7 @@
 	
 	/* FORMATTING */
 	.container {
-		@apply max-w-7xl mx-auto p-4 sm:px-8
+		@apply max-w-7xl mx-auto p-4 sm:p-8
 	}
 }
 

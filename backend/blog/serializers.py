@@ -1,9 +1,11 @@
-from rest_framework.serializers import ModelSerializer
-
+from accounts.serializers import UserSerializer
+from core.serializers import DynamicFieldsModelSerializer
 from .models import BlogPost
 
 
-class BlogPostSerializer(ModelSerializer):
+class BlogPostSerializer(DynamicFieldsModelSerializer):
+	user = UserSerializer(fields=('first_name', 'last_name'))
+
 	class Meta:
 		model = BlogPost
-		fields = ('id', 'user', 'title', 'content', 'publish_date', 'status')
+		fields = '__all__'

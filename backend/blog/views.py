@@ -22,10 +22,10 @@ class PortalBlogViewSet(viewsets.ModelViewSet):
 		posts = self.get_queryset()
 		page = self.paginate_queryset(posts)
 		if page is not None:
-			serializer = self.get_serializer(page, many=True)
+			serializer = self.get_serializer(page, many=True, fields=('id', 'title', 'status'))
 			return self.get_paginated_response(serializer.data)
 
-		serializer = self.get_serializer(posts, many=True)
+		serializer = self.get_serializer(posts, many=True, fields=('id', 'title', 'status'))
 		return self.get_paginated_response(serializer.data)
 
 	def create(self, request):
@@ -49,7 +49,7 @@ class PortalBlogViewSet(viewsets.ModelViewSet):
 
 	def retrieve(self, request, pk=None):
 		post = get_object_or_404(BlogPost, pk=pk)
-		serializer = BlogPostSerializer(post)
+		serializer = self.get_serializer(post, fields=('id', 'title', 'content', 'publish_date', 'status', 'user'))
 		return Response(serializer.data, status=status.HTTP_200_OK)
 
 	def update(self, request, pk=None):
@@ -79,4 +79,20 @@ class BlogViewSet(viewsets.ModelViewSet):
 	permission_classes = (AllowAny,)
 	serializer_class = BlogPostSerializer
 	http_method_names = ['get']
+	pagination_class = BlogPostPaginator
 	queryset = BlogPost.objects.filter(status=BLOG_PUBLISHED)
+
+	def list(self, request):
+		posts = self.get_queryset()
+		page = self.paginate_queryset(posts)
+		if page is not None:
+			serializer = self.get_serializer(page, many=True, fields=('id', 'user', 'title', 'content', 'publish_date'))
+			return self.get_paginated_response(serializer.data)
+
+		serializer = self.get_serializer(posts, many=True, fields=('id', 'user', 'title', 'content', 'publish_date'))
+		return self.get_paginated_response(serializer.data)
+
+	def retrieve(self, request, pk=None):
+		post = get_object_or_404(BlogPost, pk=pk)
+		serializer = self.get_serializer(post, fields=('user', 'title', 'content', 'publish_date'))
+		return Response(serializer.data, status=status.HTTP_200_OK)

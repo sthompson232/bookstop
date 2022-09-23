@@ -38,13 +38,13 @@ export const useUser = () => {
 }
 
 
-export const useBlogPost = () => {
+export const useBlogPost = (url: string) => {
 	const config: SWRConfiguration = {
 		refreshInterval: 30000,
 		shouldRetryOnError: false,
 		revalidateOnFocus: true,
 	}
-	const { data, mutate, error } = useSWR(PORTAL_BLOG_LIST_ENDPOINT, defaultFetcher, config)
+	const { data, mutate, error } = useSWR(url, defaultFetcher, config)
 	const isLoading = !data && !error
 	return {
 		data,

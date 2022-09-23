@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from reversion.admin import VersionAdmin
+
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import User
 
@@ -11,7 +13,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'is_staff', 'is_superuser', 'is_active',)
     list_filter = ('email', 'is_staff', 'is_superuser', 'is_active',)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'first_name', 'last_name' ,'password')}),
         ('Permissions', {'fields': ('is_staff', 'is_superuser', 'is_active')}),
     )
     add_fieldsets = (
@@ -24,5 +26,5 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
 
 @admin.register(User)
-class UserAdmin(CustomUserAdmin):
+class UserAdmin(CustomUserAdmin, VersionAdmin):
     pass
