@@ -24,8 +24,3 @@ def send_email(
 				email_message.attach_alternative(html_email, "text/html")
 
 		email_message.send()
-
-
-@shared_task(name='beat_task')
-def beat_task():
-	print('BEAT TASK RUNNING!!!!!')
