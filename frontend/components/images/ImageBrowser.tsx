@@ -24,7 +24,7 @@ const ImageBrowser = () => {
   const [images, setImages] = useState<ImageState[] | []>([]);
   const [imageCopied, setImageCopied] = useState<number | null>();
 
-  const fetchPage = useCallback(async () => {
+  const fetchPage = useCallback(async (firstPage: boolean) => {
     if (!pageLoading && page && !fetching) {
       setPageLoading(true);
       const response = await fetch(page, {
@@ -39,7 +39,11 @@ const ImageBrowser = () => {
         return false;
       });
       if (response) {
-        setImages((prevState) => [...prevState, ...response.results]);
+        if (firstPage) {
+          setImages(response.results);
+        } else {
+          setImages((prevState) => [...prevState, ...response.results]);
+        }
         setPage(response.next);
       }
       setPageLoading(false);
@@ -50,7 +54,7 @@ const ImageBrowser = () => {
   useEffect(() => {
     if (!images.length && !fetching) {
       setFetching(true);
-      fetchPage();
+      fetchPage(true);
     }
   }, [fetching, fetchPage, images]);
 
@@ -70,7 +74,7 @@ const ImageBrowser = () => {
         dataLength={images.length}
         next={() => {
           if (!fetching) {
-            fetchPage();
+            fetchPage(false);
           }
         }}
         hasMore={!!page}
@@ -85,44 +89,39 @@ const ImageBrowser = () => {
         )}
       >
         <div className="flex flex-wrap">
-          {images.length
-            ? (images.map((image) => (
-              <div className="relative w-1/2 2xl:w-1/3 p-1" key={image.id}>
-                <img
-                  className={classNames('object-cover aspect-square m-0 cursor-pointer transition-all hover:brightness-90 rounded', {
-                    'hover:brightness-100': imageCopied === image.id,
+          {images.length && images.map((image) => (
+            <div className="relative w-1/2 2xl:w-1/3 p-1" key={image.id}>
+              <img
+                className={classNames('object-cover aspect-square m-0 cursor-pointer transition-all hover:brightness-90 rounded', {
+                  'hover:brightness-100': imageCopied === image.id,
+                })}
+                onClick={() => {
+                  const permissionName = 'clipboard-write' as PermissionName;
+                  navigator.permissions.query({ name: permissionName }).then((result) => {
+                    if (result.state === 'granted' || result.state === 'prompt') {
+                      navigator.clipboard.writeText(image.file);
+                      setImageCopied(image.id);
+                    }
+                  });
+                }}
+                src={image.file}
+                alt={image.id.toString()}
+              />
+              <div className="absolute top-0 left-0 w-full h-full p-1 pointer-events-none">
+                <div
+                  className={classNames('flex justify-center items-center rounded text-white w-full h-full bg-black/50 transition-all duration-500', {
+                    'opacity-100': imageCopied === image.id,
+                    'opacity-0': imageCopied !== image.id,
                   })}
-                  onClick={() => {
-                    const permissionName = 'clipboard-write' as PermissionName;
-                    navigator.permissions.query({ name: permissionName }).then((result) => {
-                      if (result.state === 'granted' || result.state === 'prompt') {
-                        navigator.clipboard.writeText(image.file);
-                        setImageCopied(image.id);
-                      }
-                    });
-                  }}
-                  src={image.file}
-                  alt={image.id.toString()}
-                />
-                <div className="absolute top-0 left-0 w-full h-full p-1 pointer-events-none">
-                  <div
-                    className={classNames('flex justify-center items-center rounded text-white w-full h-full bg-black/50 transition-all duration-500', {
-                      'opacity-100': imageCopied === image.id,
-                      'opacity-0': imageCopied !== image.id,
-                    })}
-                  >
-                    <span>
-                      <LinkIcon />
-                      <p className="text-white my-0">Copied</p>
-                    </span>
-                  </div>
+                >
+                  <span>
+                    <LinkIcon />
+                    <p className="text-white my-0">Copied</p>
+                  </span>
                 </div>
               </div>
-            ))) : (
-              <div className="h-full flex justify-center items-center">
-                <Loader width={48} height={48} />
-              </div>
-            )}
+            </div>
+          ))}
         </div>
       </InfiniteScroll>
     </div>

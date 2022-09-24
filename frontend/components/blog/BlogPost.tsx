@@ -1,5 +1,5 @@
+import sanitizeHtml from 'sanitize-html'
 import { UserType } from '../../constants/types/accounts'
-
 
 interface PropTypes {
   title: string,
@@ -24,7 +24,7 @@ const BlogPost = ({ title, content, publishDate, user }: PropTypes) => {
     <div className="max-w-5xl mx-auto">
       <h1 className="mb-24">{title}</h1>
       {renderSubtitleText()}
-      <div dangerouslySetInnerHTML={{ __html: content }}></div>
+      <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }}></div>
     </div>
   )
 }
