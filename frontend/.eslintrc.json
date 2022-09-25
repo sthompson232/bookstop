@@ -4,7 +4,10 @@
     "browser": true,
     "es6": true
   },
-  "extends": ["next", "prettier", "airbnb"],
+  "extends": ["next", "prettier", "airbnb", "airbnb-typescript"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "rules": {
     "@next/next/no-img-element": "off",
     "react/react-in-jsx-scope": "off",
@@ -14,6 +17,7 @@
     "react/default-props-match-prop-types": "off",
     "react/button-has-type": "off",
     "consistent-return": "off",
+    "react/no-danger": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

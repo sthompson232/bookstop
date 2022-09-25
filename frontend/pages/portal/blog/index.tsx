@@ -1,70 +1,73 @@
-import { Fragment, useContext, useState } from 'react'
-import type { NextPage } from 'next'
-import Link from 'next/link'
-import classNames from 'classnames'
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/20/solid'
+import { useContext, useState } from 'react';
+import type { NextPage } from 'next';
+import Link from 'next/link';
+import classNames from 'classnames';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/20/solid';
 // Local components
-import Button from '../../../components/ui/Button'
+import Button from '../../../components/ui/Button';
 // Hooks
-import { useBlogPost } from '../../../swr/hooks'
+import { useBlogPost } from '../../../swr/hooks';
 // Context
-import { AlertContext } from '../../../components/alerts/AlertContextProvider'
+import { AlertContext } from '../../../components/alerts/AlertContextProvider';
 // Constants
-import { PORTAL_BLOG_DELETE_ENDPOINT, PORTAL_BLOG_EDIT_URL, PORTAL_BLOG_NEW_URL, PORTAL_BLOG_LIST_ENDPOINT } from '../../../constants/urls'
-import Loader from '../../../components/ui/Loader'
-import { getRestAPIHeaders } from '../../../utils/headers'
-import { GENERIC_ERROR_MESSAGE } from '../../../constants/error-messages'
-import { BlogPostType } from '../../../constants/types/blog'
+import {
+  PORTAL_BLOG_DELETE_ENDPOINT, PORTAL_BLOG_EDIT_URL, PORTAL_BLOG_NEW_URL, PORTAL_BLOG_LIST_ENDPOINT,
+} from '../../../constants/urls';
+import Loader from '../../../components/ui/Loader';
+import { getRestAPIHeaders } from '../../../utils/headers';
+import { GENERIC_ERROR_MESSAGE } from '../../../constants/error-messages';
+import { BlogPostType } from '../../../constants/types/blog';
 // Utils
-import { getBlogPostStatusText } from '../../../utils/blog' 
-
+import { getBlogPostStatusText } from '../../../utils/blog';
 
 const PortalBlogPage: NextPage = () => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const { data, isLoading, mutate } = useBlogPost(`${PORTAL_BLOG_LIST_ENDPOINT}?page=${currentPage}`)
-  const { sendAlert } = useContext(AlertContext)
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isLoading, mutate } = useBlogPost(`${PORTAL_BLOG_LIST_ENDPOINT}?page=${currentPage}`);
+  const { sendAlert } = useContext(AlertContext);
 
   const deletePost = async (post: BlogPostType) => {
-    const blogPostId = post.id
+    const blogPostId = post.id;
     if (blogPostId) {
       const result = await fetch(`${PORTAL_BLOG_DELETE_ENDPOINT.replace('$(id)', blogPostId.toString())}/`, {
         method: 'DELETE',
         headers: {
           ...getRestAPIHeaders(),
-        }
-      })
+        },
+      });
       if (result.ok) {
-        sendAlert('success', `Post deleted - ${post.title}`)
-        mutate()
+        sendAlert('success', `Post deleted - ${post.title}`);
+        mutate();
       } else {
-        sendAlert('error', GENERIC_ERROR_MESSAGE)
+        sendAlert('error', GENERIC_ERROR_MESSAGE);
       }
     }
-  }
+  };
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    for (let i = 0; i < data.total_pages; i++) {
-      if (Math.abs((i + 1) - currentPage) < 5) 
-      pageNumbers.push(
-        <div 
-          key={i}
-          className={classNames('inline text-sm font-medium p-3 rounded transition-all', {
-            'bg-gray-50 hover:bg-gray-100 text-gray-500 hover:text-gray-700 cursor-pointer': currentPage !== i + 1,
-            'bg-dark-green text-white': currentPage === i + 1
-          })}
-          onClick={() => {
-            if (currentPage !== i + 1) {
-              setCurrentPage(i + 1)
-            }
-          }}
-        >
-          {i + 1}
-        </div>
-      )
+    for (let i = 0; i < data.total_pages; i += 1) {
+      if (Math.abs((i + 1) - currentPage) < 5) {
+        pageNumbers.push(
+          <button
+            type="button"
+            key={i}
+            className={classNames('inline text-sm font-medium p-3 rounded transition-all', {
+              'bg-gray-50 hover:bg-gray-100 text-gray-500 hover:text-gray-700 cursor-pointer': currentPage !== i + 1,
+              'bg-dark-green text-white': currentPage === i + 1,
+            })}
+            onClick={() => {
+              if (currentPage !== i + 1) {
+                setCurrentPage(i + 1);
+              }
+            }}
+          >
+            {i + 1}
+          </button>,
+        );
+      }
     }
     return pageNumbers;
-  }
+  };
 
   return (
     <div className="container">
@@ -75,13 +78,13 @@ const PortalBlogPage: NextPage = () => {
           </Button>
         </Link>
       </div>
-      {isLoading 
+      {isLoading
         ? (
           <div className="flex justify-center items-center">
             <Loader width={48} height={48} />
           </div>
         ) : (
-          <Fragment>
+          <>
             <div className="rounded-lg shadow ring-1 ring-black ring-opacity-5">
               <table className="min-w-full divide-y divide-gray-300 rounded-lg overflow-hidden">
                 <thead className="bg-gray-50">
@@ -133,18 +136,20 @@ const PortalBlogPage: NextPage = () => {
                             <Link href={PORTAL_BLOG_EDIT_URL.replace('$(id)', post.id.toString())} passHref>
                               <span className="link-text">
                                 Edit
-                              </span>                       
+                              </span>
                             </Link>
                             <span className="text-dark-green"> | </span>
                             <button
-                              className="link-text" onClick={() => deletePost(post)}
+                              className="link-text"
+                              onClick={() => deletePost(post)}
                             >
                               Delete
-                            </button>                       
+                            </button>
                           </td>
                         </tr>
-                      )
+                      );
                     }
+                    return undefined;
                   })}
                 </tbody>
               </table>
@@ -152,39 +157,44 @@ const PortalBlogPage: NextPage = () => {
 
             <nav className="px-4 flex items-center justify-center sm:justify-between sm:px-0">
               <div className="hidden sm:flex w-0 flex-1">
-                {currentPage > 1 &&
-                  <button
-                    onClick={() => setCurrentPage(prevState => prevState -= 1)}
-                    className="bg-gray-50 hover:bg-gray-100 p-3 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 rounded transition-all"
-                  >
-                    <ArrowLeftIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-                    Previous
-                  </button>
-                }
+                {currentPage > 1
+                  && (
+                    <button
+                      onClick={() => {
+                        setCurrentPage((prevState) => prevState - 1);
+                      }}
+                      className="bg-gray-50 hover:bg-gray-100 p-3 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 rounded transition-all"
+                    >
+                      <ArrowLeftIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+                      Previous
+                    </button>
+                  )}
               </div>
-              {data.total_pages > 1 &&
-                <div className="space-x-2">
-                  {renderPageNumbers()}
-                </div>
-              }
+              {data.total_pages > 1
+                && (
+                  <div className="space-x-2">
+                    {renderPageNumbers()}
+                  </div>
+                )}
               <div className="hidden sm:flex w-0 flex-1 justify-end">
-                {currentPage < data.total_pages &&
-                  <button
-                    onClick={() => setCurrentPage(prevState => prevState += 1)}
-                    className="bg-gray-50 hover:bg-gray-100 p-3 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 rounded transition-all"
-                  >
-                    Next
-                    <ArrowRightIcon className="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-                  </button>
-                }
+                {currentPage < data.total_pages
+                  && (
+                    <button
+                      onClick={() => {
+                        setCurrentPage((prevState) => prevState + 1);
+                      }}
+                      className="bg-gray-50 hover:bg-gray-100 p-3 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 rounded transition-all"
+                    >
+                      Next
+                      <ArrowRightIcon className="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+                    </button>
+                  )}
               </div>
             </nav>
-          </Fragment>
-        )
-      }
+          </>
+        )}
     </div>
-  )
-}
+  );
+};
 
-
-export default PortalBlogPage
+export default PortalBlogPage;

@@ -1,20 +1,23 @@
-import { FieldError, useController, UseControllerProps } from 'react-hook-form'
-import classNames from 'classnames'
-import { ExclamationCircleIcon } from '@heroicons/react/20/solid'
-
+import { FieldError, useController, UseControllerProps } from 'react-hook-form';
+import classNames from 'classnames';
+import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 
 interface PropTypes extends UseControllerProps, React.InputHTMLAttributes<HTMLInputElement> {
   name: string,
   defaultValue?: string,
-  control?: any,
+  control: any,
   error?: FieldError,
 }
 
 const TextInput = (props: PropTypes) => {
-  const { name, control, error } = props
-  const { field: { onChange, onBlur, ref, value } } = useController({
+  const { name, control, error } = props;
+  const {
+    field: {
+      onChange, onBlur, ref, value,
+    },
+  } = useController({
     name,
-    control
+    control,
   });
 
   return (
@@ -34,18 +37,24 @@ const TextInput = (props: PropTypes) => {
           aria-invalid="true"
           aria-describedby={`${name}-error`}
         />
-          <div className={classNames('pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 transition-all', {
+        <div
+          className={classNames('pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 transition-all', {
             'opacity-100': error,
-            'opacity-0': !error
-          })}>
-            <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-          </div>
+            'opacity-0': !error,
+          })}
+        >
+          <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+        </div>
       </div>
-      {error?.message &&
-        <p className="error-text" id={`${name}-error`}>{error?.message}</p>
-      }
+      {error?.message
+        && <p className="error-text" id={`${name}-error`}>{error?.message}</p>}
     </div>
-  )
-}
+  );
+};
 
-export default TextInput
+TextInput.defaultProps = {
+  defaultValue: undefined,
+  error: undefined,
+};
+
+export default TextInput;

@@ -1,23 +1,11 @@
-import type { NextPage, GetServerSideProps } from 'next'
+import type { NextPage } from 'next';
 // Local components
-import BlogPostForm from '../../../components/forms/forms/blog/BlogPostForm'
+import BlogPostForm from '../../../components/forms/forms/blog/BlogPostForm';
 // Constants
-import { blogPostDefaultValues } from '../../../components/forms/schema/blog'
-import { BlogPostType } from '../../../constants/types/blog'
+import { blogPostDefaultValues } from '../../../components/forms/schema/blog';
 
+const BlogNewPage: NextPage = () => (
+  <BlogPostForm defaultValues={blogPostDefaultValues} editing={false} />
+);
 
-const BlogNewPage: NextPage<{ defaultValues: BlogPostType }> = ({ defaultValues }) => {
-  return (
-    <BlogPostForm defaultValues={defaultValues} editing={false} />
-  )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    props: {
-      defaultValues: blogPostDefaultValues,
-    }
-  }
-}
-
-export default BlogNewPage
+export default BlogNewPage;

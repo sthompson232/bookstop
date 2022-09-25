@@ -1,24 +1,21 @@
-import type { AppProps } from 'next/app'
-import { SWRConfig } from 'swr'
+import type { AppProps } from 'next/app';
+import { SWRConfig } from 'swr';
 // Local components
-import LayoutWrapper from '../components/layout/LayoutWrapper'
-import AlertContextProvider from '../components/alerts/AlertContextProvider'
+import LayoutWrapper from '../components/layout/LayoutWrapper';
+import AlertContextProvider from '../components/alerts/AlertContextProvider';
 // Styling
-import '../styles/globals.css'
+import '../styles/globals.css';
 // Utils
-import { defaultFetcher } from '../swr/fetchers'
+import { defaultFetcher } from '../swr/fetchers';
 
+const App = ({ Component, pageProps }: AppProps) => (
+  <SWRConfig value={{ fetcher: defaultFetcher }}>
+    <AlertContextProvider>
+      <LayoutWrapper>
+        <Component {...pageProps} />
+      </LayoutWrapper>
+    </AlertContextProvider>
+  </SWRConfig>
+);
 
-const App = ({ Component, pageProps }: AppProps) => {
-  return (
-    <SWRConfig value={{ fetcher: defaultFetcher }}>
-      <AlertContextProvider>
-        <LayoutWrapper>
-          <Component {...pageProps} />
-        </LayoutWrapper>
-      </AlertContextProvider>
-    </SWRConfig>
-  )
-}
-
-export default App
+export default App;

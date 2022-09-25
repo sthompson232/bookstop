@@ -7,7 +7,7 @@ interface PropTypes extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean,
 }
 
-/* eslint-disable no-unused-vars */
+/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 const Button = forwardRef(({ loading, type, ...props }: PropTypes, ref) => (
   <button
     {...props}

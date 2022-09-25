@@ -88,22 +88,27 @@ const ImageBrowser = () => {
           <p className="text-center font-bold my-0">End of images</p>
         )}
       >
-        <div className="flex flex-wrap">
+        <ul className="flex flex-wrap pl-0 mt-0">
           {images.length && images.map((image) => (
-            <div className="relative w-1/2 2xl:w-1/3 p-1" key={image.id}>
+            /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
+            jsx-a11y/no-noninteractive-element-interactions */
+            <li
+              className="relative w-1/2 2xl:w-1/3 p-1"
+              key={image.id}
+              onClick={() => {
+                const permissionName = 'clipboard-write' as PermissionName;
+                navigator.permissions.query({ name: permissionName }).then((result) => {
+                  if (result.state === 'granted' || result.state === 'prompt') {
+                    navigator.clipboard.writeText(image.file);
+                    setImageCopied(image.id);
+                  }
+                });
+              }}
+            >
               <img
                 className={classNames('object-cover aspect-square m-0 cursor-pointer transition-all hover:brightness-90 rounded', {
                   'hover:brightness-100': imageCopied === image.id,
                 })}
-                onClick={() => {
-                  const permissionName = 'clipboard-write' as PermissionName;
-                  navigator.permissions.query({ name: permissionName }).then((result) => {
-                    if (result.state === 'granted' || result.state === 'prompt') {
-                      navigator.clipboard.writeText(image.file);
-                      setImageCopied(image.id);
-                    }
-                  });
-                }}
                 src={image.file}
                 alt={image.id.toString()}
               />
@@ -120,9 +125,9 @@ const ImageBrowser = () => {
                   </span>
                 </div>
               </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </InfiniteScroll>
     </div>
   );

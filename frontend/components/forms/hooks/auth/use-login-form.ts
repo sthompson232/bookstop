@@ -1,7 +1,6 @@
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { loginSchema } from '../../schema/auth'
-
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { loginSchema } from '../../schema/auth';
 
 export interface LoginFormTypes {
   email: string,
@@ -10,9 +9,9 @@ export interface LoginFormTypes {
 
 const useLoginForm = () => {
   const formMeta = useForm<LoginFormTypes>({
-    resolver: yupResolver(loginSchema)
-  })
-  return formMeta
-}
+    resolver: yupResolver(loginSchema),
+  });
+  return formMeta;
+};
 
-export default useLoginForm
+export default useLoginForm;
