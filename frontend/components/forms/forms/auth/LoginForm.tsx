@@ -26,23 +26,22 @@ const LoginForm = () => {
 
   const login = async (values: LoginFormTypes) => {
     setFormSubmitting(true);
-    const result = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'login' }).then(async (token: string) => {
-      return await fetch(LOGIN_ENDPOINT, {
-        method: 'POST',
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-          recaptcha_token: token,
-        }),
-        headers: {
-          ...getUnauthorizedRestAPIHeaders(),
-        },
-      }).then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return false;
-      });
+    const token = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'login' });
+    const result = await fetch(LOGIN_ENDPOINT, {
+      method: 'POST',
+      body: JSON.stringify({
+        email: values.email,
+        password: values.password,
+        recaptcha_token: token,
+      }),
+      headers: {
+        ...getUnauthorizedRestAPIHeaders(),
+      },
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return false;
     });
     if (result) {
       setCookie('token', result.token, 7);
