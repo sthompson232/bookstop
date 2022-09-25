@@ -12,17 +12,23 @@ const Button = forwardRef(({ loading, type, ...props }: PropTypes, ref) => (
   <button
     {...props}
     type={type}
-    className={props.className || classNames('btn', {
-      'btn-loading': loading,
-    })}
+    className={props.className || 'btn'}
+    disabled={props.disabled || loading}
   >
-    {loading
-      && (
-        <div className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center">
-          <Loader fill="#fff" width={12} height={12} />
+    <div>
+      <span
+        className={classNames('', {
+          'invisible': loading,
+        })}
+      >
+        {props.children}
+      </span>
+      {loading &&
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Loader fill="#fff" width={16} height={16} />
         </div>
-      )}
-    {props.children}
+      }
+</div>
   </button>
 ));
 
