@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FormProvider } from 'react-hook-form';
@@ -16,7 +16,7 @@ import { getUnauthorizedRestAPIHeaders } from '../../../../utils/headers';
 import { FAILED_LOGIN } from '../../../../constants/error-messages';
 // Utils
 import { setCookie } from '../../../../utils/cookies';
-import { RECAPTCHA_SITE_KEY } from '../../../../constants';
+import { getRecaptchaToken } from '../../../../utils';
 
 const LoginForm = () => {
   const [formSubmitting, setFormSubmitting] = useState(false);
@@ -26,7 +26,7 @@ const LoginForm = () => {
 
   const login = async (values: LoginFormTypes) => {
     setFormSubmitting(true);
-    const token = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'login' });
+    const token = await getRecaptchaToken('login');
     const result = await fetch(LOGIN_ENDPOINT, {
       method: 'POST',
       body: JSON.stringify({
@@ -53,13 +53,6 @@ const LoginForm = () => {
     }
     setFormSubmitting(false);
   };
-
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
-    document.body.appendChild(script);
-    return () => script.remove();
-  }, []);
 
   return (
     <FormProvider {...methods}>

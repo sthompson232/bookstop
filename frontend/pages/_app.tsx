@@ -7,6 +7,7 @@ import AlertContextProvider from '../components/alerts/AlertContextProvider';
 import { ReCaptchaInstance } from '../constants/types/recaptcha';
 // Utils
 import { defaultFetcher } from '../swr/fetchers';
+import useRecaptcha from '../components/hooks/use-recaptcha';
 // Styling
 import '../styles/globals.css';
 
@@ -17,14 +18,17 @@ declare global {
   }
 }
 
-const App = ({ Component, pageProps }: AppProps) => (
-  <SWRConfig value={{ fetcher: defaultFetcher }}>
-    <AlertContextProvider>
-      <LayoutWrapper>
-        <Component {...pageProps} />
-      </LayoutWrapper>
-    </AlertContextProvider>
-  </SWRConfig>
-);
+const App = ({ Component, pageProps }: AppProps) => {
+  useRecaptcha();
+  return (
+    <SWRConfig value={{ fetcher: defaultFetcher }}>
+      <AlertContextProvider>
+        <LayoutWrapper>
+          <Component {...pageProps} />
+        </LayoutWrapper>
+      </AlertContextProvider>
+    </SWRConfig>
+  );
+};
 
 export default App;

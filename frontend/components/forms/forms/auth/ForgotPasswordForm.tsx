@@ -10,6 +10,7 @@ import { FORGOT_PASSWORD_ENDPOINT } from '../../../../constants/urls';
 import { GENERIC_ERROR_MESSAGE } from '../../../../constants/error-messages';
 // Utils
 import { getUnauthorizedRestAPIHeaders } from '../../../../utils/headers';
+import { getRecaptchaToken } from '../../../../utils';
 
 interface PropTypes {
   setFormSubmittedSuccessfully: Function
@@ -21,10 +22,12 @@ const ForgotPasswordForm = ({ setFormSubmittedSuccessfully }: PropTypes) => {
 
   const submitForm = async (values: ForgotPasswordFormTypes) => {
     setFormSubmitting(true);
+    const token = await getRecaptchaToken('forgotPassword');
     const result = await fetch(FORGOT_PASSWORD_ENDPOINT, {
       method: 'POST',
       body: JSON.stringify({
         email: values.email,
+        recaptcha_token: token,
       }),
       headers: {
         ...getUnauthorizedRestAPIHeaders(),

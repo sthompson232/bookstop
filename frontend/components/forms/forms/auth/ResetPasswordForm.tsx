@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { FormProvider } from 'react-hook-form';
 // Local components
@@ -7,19 +8,19 @@ import Button from '../../../ui/Button';
 import useResetPasswordForm, { ResetPasswordFormTypes } from '../../hooks/auth/use-reset-password-form';
 // Constants
 import { GENERIC_ERROR_MESSAGE } from '../../../../constants/error-messages';
+import { AlertContext } from '../../../alerts/AlertContextProvider';
 // Utils
-import { RESET_PASSWORD_ENDPOINT } from '../../../../constants/urls';
+import { LOGIN_URL, RESET_PASSWORD_ENDPOINT } from '../../../../constants/urls';
 import { getUnauthorizedRestAPIHeaders } from '../../../../utils/headers';
+import { getRecaptchaToken } from '../../../../utils';
 
-interface PropTypes {
-  setFormSubmittedSuccessfully: Function
-}
-
-const ResetPasswordForm = ({ setFormSubmittedSuccessfully }: PropTypes) => {
+const ResetPasswordForm = () => {
   const router = useRouter();
   const methods = useResetPasswordForm();
+  const { sendAlert } = useContext(AlertContext);
 
   const submitForm = async (values: ResetPasswordFormTypes) => {
+    const token = await getRecaptchaToken('resetPassword');
     const result = await fetch(RESET_PASSWORD_ENDPOINT, {
       method: 'POST',
       headers: {
@@ -30,10 +31,12 @@ const ResetPasswordForm = ({ setFormSubmittedSuccessfully }: PropTypes) => {
         password2: values.password2,
         uid: router.query.uid,
         token: router.query.token,
+        recaptcha_token: token,
       }),
     }).then((res) => {
       if (res.ok) {
-        setFormSubmittedSuccessfully(true);
+        router.push(LOGIN_URL);
+        sendAlert('success', 'Password successfully reset');
       }
       if (res.status === 403) {
         methods.setError('password1', { message: GENERIC_ERROR_MESSAGE });

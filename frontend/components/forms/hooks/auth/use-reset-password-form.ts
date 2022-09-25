@@ -7,9 +7,15 @@ export interface ResetPasswordFormTypes {
   password2: string
 }
 
+const resetFormDefaultValues = {
+  password1: '',
+  password2: '',
+};
+
 const useResetPasswordForm = () => {
   const formMeta = useForm<ResetPasswordFormTypes>({
     resolver: yupResolver(resetPasswordSchema),
+    defaultValues: resetFormDefaultValues,
   });
   return formMeta;
 };

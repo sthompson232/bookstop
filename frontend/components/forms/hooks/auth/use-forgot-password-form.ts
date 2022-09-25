@@ -7,9 +7,14 @@ export interface ForgotPasswordFormTypes {
   email: string
 }
 
+const forgotPasswordDefaultValues = {
+  email: '',
+};
+
 const useForgotPasswordForm = () => {
   const formMeta = useForm<ForgotPasswordFormTypes>({
     resolver: yupResolver(forgotPasswordSchema),
+    defaultValues: forgotPasswordDefaultValues,
   });
   return formMeta;
 };

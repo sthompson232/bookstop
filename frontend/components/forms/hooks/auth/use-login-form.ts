@@ -7,9 +7,15 @@ export interface LoginFormTypes {
   password: string,
 }
 
+const loginFormDefaultValues = {
+  email: '',
+  password: '',
+};
+
 const useLoginForm = () => {
   const formMeta = useForm<LoginFormTypes>({
     resolver: yupResolver(loginSchema),
+    defaultValues: loginFormDefaultValues,
   });
   return formMeta;
 };

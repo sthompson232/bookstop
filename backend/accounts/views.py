@@ -29,7 +29,7 @@ class LoginView(KnoxLoginView):
     serializer = CustomAuthTokenSerializer(data=auth_data)
     serializer.is_valid(raise_exception=True)
     user = serializer.validated_data['user']
-    if validate_recaptcha(recaptcha_token, 0.5):
+    if validate_recaptcha(recaptcha_token, 0.6):
       login(request, user)
       return super(LoginView, self).post(request, format=None)
     else:
@@ -52,23 +52,24 @@ class ForgotPasswordView(views.APIView):
   permission_classes = (permissions.AllowAny,)
 
   def post(self, request):
-    if 'email' in request.data:
-      user_email = request.data['email']
-      user = User.objects.get(email=user_email)
-      uid = urlsafe_base64_encode(force_bytes(user.pk))
-      token = default_token_generator.make_token(user)
-      reset_url = f'http://localhost:3000/auth/reset-password/{uid}/{token}'
-      context = {
-        "reset_url": reset_url,
-      }
-      send_email.delay(
-        'emails/password_reset_subject.txt',
-        'emails/password_reset_email.html',
-        context,
-        None,
-        user_email,
-      )
-      return Response({}, status=status.HTTP_200_OK)
+    if 'email' in request.data and 'recaptcha_token' in request.data:
+      if validate_recaptcha(request.data['recaptcha_token'], 0.6):
+        user_email = request.data['email']
+        user = User.objects.get(email=user_email)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+        reset_url = f'http://localhost:3000/auth/reset-password/{uid}/{token}'
+        context = {
+          "reset_url": reset_url,
+        }
+        send_email.delay(
+          'emails/password_reset_subject.txt',
+          'emails/password_reset_email.html',
+          context,
+          None,
+          user_email,
+        )
+        return Response({}, status=status.HTTP_200_OK)
     return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -77,31 +78,30 @@ class ResetPasswordView(views.APIView):
 
   def post(self, request):
     data = request.data
-    if 'password1' in data and 'password2' in data and 'uid' in data and 'token' in data:
-      password1 = request.data['password1']
-      password2 = request.data['password2']
-      uid = request.data['uid']
-      token = request.data['token']
-      if password1 == password2:
-        try:
-          user = User.objects.get(pk=urlsafe_base64_decode(uid).decode())
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist, ValidationError):
-          return Response({}, status=status.HTTP_403_FORBIDDEN)
-        valid_token = default_token_generator.check_token(user, token)
-        if valid_token:
+    if 'password1' in data and 'password2' in data and 'uid' in data and 'token' in data and 'recaptcha_token' in data:
+      if validate_recaptcha(data['recaptcha_token'], 0.6):
+        password1 = request.data['password1']
+        password2 = request.data['password2']
+        uid = request.data['uid']
+        token = request.data['token']
+        if password1 == password2:
           try:
-            validate_password(password1, user)
-          except ValidationError as errors:
-            return Response({ 'errors': errors }, status=status.HTTP_400_BAD_REQUEST)
-          user.set_password(password1)
-          user.save()
-          return Response({}, status=status.HTTP_200_OK)
-        else:
+            user = User.objects.get(pk=urlsafe_base64_decode(uid).decode())
+          except (TypeError, ValueError, OverflowError, User.DoesNotExist, ValidationError):
+            return Response({}, status=status.HTTP_403_FORBIDDEN)
+          valid_token = default_token_generator.check_token(user, token)
+          if valid_token:
+            try:
+              validate_password(password1, user)
+            except ValidationError as errors:
+              return Response({ 'errors': errors }, status=status.HTTP_400_BAD_REQUEST)
+            user.set_password(password1)
+            user.save()
+            return Response({}, status=status.HTTP_200_OK)
           return Response({}, status=status.HTTP_403_FORBIDDEN)
-      else:
         return Response({}, status=status.HTTP_400_BAD_REQUEST)
-    else:
-      return Response({}, status=status.HTTP_400_BAD_REQUEST)
+      return Response({}, status=status.HTTP_403_FORBIDDEN)
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetTinyAPIKey(views.APIView):

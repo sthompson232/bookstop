@@ -19,7 +19,7 @@ const Button = forwardRef(({ loading, type, ...props }: PropTypes, ref) => (
     {loading
       && (
         <div className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center">
-          <Loader fill="#fff" width={16} height={16} />
+          <Loader fill="#fff" width={12} height={12} />
         </div>
       )}
     {props.children}
