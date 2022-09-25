@@ -21,15 +21,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-		'blog',
-		'core',
-		'emails',
-		'corsheaders',
-		'django_celery_beat',
-		'mediamanager',
+    'blog',
+    'core',
+    'emails',
+    'corsheaders',
+    'django_celery_beat',
+    'mediamanager',
     'rest_framework',
     'knox',
-		'reversion',
+    'reversion',
 ]
 
 AUTH_USER_MODEL = "accounts.User"
@@ -48,8 +48,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 REST_KNOX = {
-	'TOKEN_TTL': timedelta(days=7),
-	'AUTO_REFRESH': True,
+  'TOKEN_TTL': timedelta(days=7),
+  'AUTO_REFRESH': True,
 }
 
 REST_FRAMEWORK = {
@@ -60,13 +60,13 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-		'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-		'reversion.middleware.RevisionMiddleware',
+    'reversion.middleware.RevisionMiddleware',
 ]
 
 ROOT_URLCONF = 'bookstop.urls'

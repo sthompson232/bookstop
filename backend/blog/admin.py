@@ -5,4 +5,4 @@ from .models import BlogPost
 
 @admin.register(BlogPost)
 class BlogPostAdmin(VersionAdmin):
-	pass
+  pass

@@ -17,11 +17,11 @@ router.register(f'{API_ENDPOINT_PREFIX}portal-blog', PortalBlogViewSet, basename
 router.register(f'{API_ENDPOINT_PREFIX}images', ImageViewSet, basename='media-manager')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path(f'{API_ENDPOINT_PREFIX}auth/', include('knox.urls')),
-    path(f'{API_ENDPOINT_PREFIX}accounts/', include('accounts.urls')),
-		path(f'{API_ENDPOINT_PREFIX}media-manager/', include('mediamanager.urls')),
+  path('admin/', admin.site.urls),
+  path(f'{API_ENDPOINT_PREFIX}auth/', include('knox.urls')),
+  path(f'{API_ENDPOINT_PREFIX}accounts/', include('accounts.urls')),
+  path(f'{API_ENDPOINT_PREFIX}media-manager/', include('mediamanager.urls')),
 ]
 urlpatterns += router.urls
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

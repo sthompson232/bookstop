@@ -4,8 +4,8 @@ from .models import BlogPost
 
 
 class BlogPostSerializer(DynamicFieldsModelSerializer):
-	user = UserSerializer(fields=('first_name', 'last_name'))
+  user = UserSerializer(fields=('first_name', 'last_name'))
 
-	class Meta:
-		model = BlogPost
-		fields = '__all__'
+  class Meta:
+    model = BlogPost
+    fields = '__all__'
