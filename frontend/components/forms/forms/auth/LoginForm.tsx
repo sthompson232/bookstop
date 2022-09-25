@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FormProvider } from 'react-hook-form';
@@ -16,6 +16,7 @@ import { getUnauthorizedRestAPIHeaders } from '../../../../utils/headers';
 import { FAILED_LOGIN } from '../../../../constants/error-messages';
 // Utils
 import { setCookie } from '../../../../utils/cookies';
+import { RECAPTCHA_SITE_KEY } from '../../../../constants';
 
 const LoginForm = () => {
   const [formSubmitting, setFormSubmitting] = useState(false);
@@ -25,20 +26,23 @@ const LoginForm = () => {
 
   const login = async (values: LoginFormTypes) => {
     setFormSubmitting(true);
-    const result = await fetch(LOGIN_ENDPOINT, {
-      method: 'POST',
-      body: JSON.stringify({
-        email: values.email,
-        password: values.password,
-      }),
-      headers: {
-        ...getUnauthorizedRestAPIHeaders(),
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return false;
+    const result = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'login' }).then(async (token: string) => {
+      return await fetch(LOGIN_ENDPOINT, {
+        method: 'POST',
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+          recaptcha_token: token,
+        }),
+        headers: {
+          ...getUnauthorizedRestAPIHeaders(),
+        },
+      }).then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return false;
+      });
     });
     if (result) {
       setCookie('token', result.token, 7);
@@ -50,6 +54,13 @@ const LoginForm = () => {
     }
     setFormSubmitting(false);
   };
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+    document.body.appendChild(script);
+    return () => script.remove();
+  }, []);
 
   return (
     <FormProvider {...methods}>

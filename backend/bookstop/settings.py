@@ -119,6 +119,9 @@ else:
 # EMAIL_HOST_USER = ''
 # EMAIL_HOST_PASSWORD = ''
 
+RECAPTCHA_SITE_KEY = os.getenv('RECAPTCHA_SITE_KEY')
+RECAPTCHA_SECRET_KEY = os.getenv('RECAPTCHA_SECRET_KEY')
+
 if DEBUG:
     STATIC_URL = '/static/'
     MEDIA_URL = '/media/'

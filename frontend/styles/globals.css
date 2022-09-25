@@ -57,6 +57,11 @@ html, body {
   visibility: hidden;
 }
 
+/* Hide reCaptcha badge */
+.grecaptcha-badge { 
+  visibility: hidden;
+}
+
 /* react-datepicker customisation */
 .react-datepicker {
   border: 1px solid #d1d5db !important;

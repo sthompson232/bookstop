@@ -18,7 +18,7 @@ const BlogPost = ({ title, content, publishDate, user }: PropTypes) => {
     return (
       <small>
         {date}
-        {fullName && '-'}
+        {fullName && ' - '}
         {fullName}
       </small>
     );
