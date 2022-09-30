@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import { UserCircleIcon } from '@heroicons/react/20/solid';
 // Local component
 import LogoutButton from './LogoutButton';
 // Constants
-import { LOGIN_URL, PORTAL_URL } from '../../../../constants/urls';
+import { LOGIN_URL, PORTAL_URL, PORTAL_ACCOUNTS_ROOT } from '../../../../constants/urls';
 // Utils
 import { useUser } from '../../../../swr/hooks';
 import Button from '../../../ui/Button';
@@ -14,7 +15,9 @@ const AdminPanel = () => {
   const renderAdminPanel = () => (isAuthenticated
     ? (
       <div className="flex justify-between items-center">
-        <h5 className="text-white">{user?.email}</h5>
+        <Link href={PORTAL_ACCOUNTS_ROOT} passHref>
+          <UserCircleIcon className="text-white w-8 h-8 hover:cursor-pointer" />
+        </Link>
         <div className="flex space-x-2">
           <Link href={PORTAL_URL} passHref>
             <Button className="btn-inverse">
